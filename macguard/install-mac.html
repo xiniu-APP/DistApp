@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>安装 MacGuard for Mac</title>
+<style>
+  :root{
+    --bg:#f2f2f7; --card:#fff; --label:#000;
+    --label2:rgba(60,60,67,.6); --label3:rgba(60,60,67,.3);
+    --sep:rgba(60,60,67,.12); --accent:#3db8f0; --accent2:#7359eb;
+    --warn-bg:rgba(255,149,0,.12); --warn-fg:#b25000; --warn-bd:rgba(255,149,0,.35);
+    --code-bg:rgba(60,60,67,.07);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#000; --card:#1c1c1e; --label:#fff;
+      --label2:rgba(235,235,245,.6); --label3:rgba(235,235,245,.3);
+      --sep:rgba(84,84,88,.65);
+      --warn-bg:rgba(255,159,10,.16); --warn-fg:#ffb340; --warn-bd:rgba(255,159,10,.3);
+      --code-bg:rgba(235,235,245,.1);
+    }
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; min-height:100vh; background:var(--bg); color:var(--label);
+    font-family:-apple-system,"SF Pro Text",system-ui,"PingFang SC","Helvetica Neue",sans-serif;
+    -webkit-font-smoothing:antialiased; padding:28px 16px;
+  }
+  .wrap{ width:100%; max-width:520px; margin:0 auto; }
+  .hero{ text-align:center; margin-bottom:24px; }
+  .appicon{
+    width:88px; height:88px; border-radius:20px; margin:0 auto 14px;
+    background:linear-gradient(160deg,#1b2230,#0a0d14);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 32px -14px rgba(61,184,240,.55);
+  }
+  .appicon svg{ width:58px; height:58px; }
+  h1{ font-size:24px; font-weight:700; letter-spacing:-.4px; margin:0 0 4px; }
+  .ver{ font-size:13px; color:var(--label2); }
+  .card{
+    background:var(--card); border:1px solid var(--sep); border-radius:16px;
+    padding:20px; margin-bottom:14px;
+  }
+  h2{
+    font-size:15px; font-weight:600; margin:0 0 12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  h2 .num{
+    width:20px; height:20px; border-radius:6px; flex:0 0 auto;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff; font-size:11px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  p{ font-size:14px; line-height:1.75; margin:0 0 10px; color:var(--label); }
+  p:last-child{ margin-bottom:0; }
+  .muted{ color:var(--label2); font-size:13px; }
+  ol,ul{ margin:0 0 10px; padding-left:20px; font-size:14px; line-height:1.85; }
+  li{ margin-bottom:4px; }
+  code{
+    background:var(--code-bg); border-radius:5px; padding:2px 6px;
+    font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:12.5px;
+    word-break:break-all;
+  }
+  pre{
+    background:var(--code-bg); border-radius:10px; padding:13px 14px;
+    overflow-x:auto; margin:10px 0;
+  }
+  pre code{ background:none; padding:0; font-size:12.5px; line-height:1.7; }
+  .btn{
+    display:block; background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff; text-decoration:none; border-radius:13px; padding:15px 0;
+    font-size:17px; font-weight:600; text-align:center; margin:4px 0 12px;
+  }
+  .warn{
+    background:var(--warn-bg); border:1px solid var(--warn-bd);
+    border-radius:12px; padding:14px 16px; margin:12px 0;
+  }
+  .warn b{ color:var(--warn-fg); display:block; margin-bottom:6px; font-size:14px; }
+  .warn p{ font-size:13.5px; color:var(--label); margin-bottom:6px; }
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; margin:8px 0; }
+  td{ padding:7px 0; border-bottom:1px solid var(--sep); vertical-align:top; }
+  td:first-child{ width:38%; color:var(--label2); padding-right:12px; }
+  tr:last-child td{ border-bottom:none; }
+  .foot{ font-size:12px; color:var(--label2); text-align:center; margin-top:20px; line-height:1.7; }
+  a{ color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="appicon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <defs>
+          <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#3db8f0"/>
+            <stop offset="100%" stop-color="#7359eb"/>
+          </linearGradient>
+        </defs>
+        <path d="M12 3.6a8.4 8.4 0 1 1-8.4 8.4"
+              stroke="url(#mg)" stroke-width="2.6" stroke-linecap="round"/>
+        <rect x="9.4" y="9" width="1.9" height="6" rx=".95" fill="#fff"/>
+        <rect x="12.7" y="9" width="1.9" height="6" rx=".95" fill="#fff"/>
+      </svg>
+    </div>
+    <h1>MacGuard</h1>
+    <div class="ver">版本 <b>__VERSION__</b> · 需要 macOS 14 以上 · Apple Silicon</div>
+  </div>
+
+  <div class="warn">
+    <b>装之前先看这条：它离不开 Clash Verge</b>
+    <p>MacGuard 不抓包、不装系统扩展，它是<b>读本机 mihomo 的连接数据</b>来知道你在访问什么。</p>
+    <p class="muted">所以这台机器上必须有 Clash Verge 在跑，且开着 TUN。没有的话 MacGuard 装上也是空转，菜单栏图标会一直是警示态。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">1</span>确认前置条件</h2>
+    <p>在终端里跑这行，四项都要通过：</p>
+    <pre><code>ls /tmp/verge/verge-mihomo.sock &amp;&amp; \
+curl -s --unix-socket /tmp/verge/verge-mihomo.sock \
+  http://localhost/configs | python3 -c "
+import sys,json; d=json.load(sys.stdin); t=d.get('tun',{})
+print('TUN 开启      :', t.get('enable'))
+print('auto-route    :', t.get('auto-route'))
+print('DNS 模式      :', d.get('dns',{}).get('enhanced-mode','?'))
+print('mihomo 可访问 : True')"</code></pre>
+    <p class="muted">期望看到 TUN 与 auto-route 都是 <code>True</code>。<br>
+       如果提示找不到 socket，说明 Clash Verge 没运行，或者它的控制接口不是 unix socket
+       （在 Clash Verge 设置里可以看到）。</p>
+    <p class="muted">用 sing-box 或别的内核也行，但要自己改 <code>config.json</code> 里的
+       <code>mihomoSocketPath</code>，接口得兼容 Clash API 的 <code>/connections</code>。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">2</span>下载安装</h2>
+    <a class="btn" href="__DOWNLOAD_URL__">下载 MacGuard.dmg</a>
+    <ol>
+      <li>双击挂载 dmg</li>
+      <li>把 <b>MacGuard</b> 拖到旁边的「应用程序」</li>
+      <li>从「应用程序」里打开（<b>别在 dmg 里直接双击运行</b>）</li>
+    </ol>
+  </div>
+
+  <div class="card" id="gatekeeper">
+    <h2><span class="num">3</span>首次打开会被拦，这样放行</h2>
+    <p>__SIGNING_NOTE__</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">4</span>打开之后做什么</h2>
+    <p>它<b>不在 Dock 里显示</b>，只在菜单栏右上角有一个环形图标。</p>
+    <p><b>黑名单默认是空的，所以装好之后它什么都不会做。</b>点菜单栏图标 → 设置 → 黑名单，
+       加上你想封的关键词。</p>
+    <p class="muted">关键词是对<b>域名</b>做子串匹配，大小写不敏感。填 <code>bilibili</code>
+       会命中 <code>www.bilibili.com</code>、<code>m.bilibili.com</code>、
+       <code>api.live.bilibili.com</code> 等等。</p>
+    <p class="muted">注意会误伤：填 <code>tube</code> 会同时命中 <code>youtube.com</code>
+       和 <code>tubemogul.com</code>。选具体一点的词。</p>
+
+    <div class="warn" style="margin-top:14px">
+      <b>建议先用短参数试一次</b>
+      <p>别一上来就 3 分钟。先把壁纸和宽限都改成 20 秒，加一个你现在就能访问的网站，
+         完整看一遍流程，确认打断效果符合预期，再调回去。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">5</span>它是怎么工作的</h2>
+    <table>
+      <tr><td>检测到黑名单域名有活跃流量</td><td>右上角出现 10 秒倒计时</td></tr>
+      <tr><td>10 秒内你关掉了</td><td>解除，什么都不发生</td></tr>
+      <tr><td>超时</td><td>全屏壁纸 3 分钟，期间关不掉</td></tr>
+      <tr><td>壁纸结束</td><td>恢复桌面 3 分钟，给你机会自己关</td></tr>
+      <tr><td>3 分钟后仍在访问</td><td>再来一轮壁纸，直到流量消失</td></tr>
+    </table>
+    <p class="muted">「有没有在用」看的是<b>流量增量</b>而不是连接是否存在——
+       挂机的 keep-alive 长连接非常多（实测 67 条里 57 条零增长，最长挂了 2.8 天），
+       按存在性判定的话循环永远退不出去。</p>
+    <p class="muted">所有记录存在本地 SQLite，菜单栏 → 查看统计可以在浏览器里看。
+       统计服务只监听 <code>127.0.0.1</code>，局域网内其他机器访问不到。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">6</span>它拦不住什么</h2>
+    <p class="muted">这些是设计上就放弃的，不是 bug：</p>
+    <table>
+      <tr><td>退出 Clash / 关掉 TUN</td><td>数据源没了，只告警不惩罚</td></tr>
+      <tr><td>直接用 IP、改 hosts</td><td>绕过 DNS，看不见</td></tr>
+      <tr><td>看本地已下载的文件</td><td>零网络流量</td></tr>
+      <tr><td>在手机上看</td><td>不是这台设备</td></tr>
+      <tr><td><code>kill -9</code> 掉它</td><td>约 10 秒后被 launchd 拉起</td></tr>
+    </table>
+    <p class="muted">共同点是<b>都需要你刻意去做一件事</b>。这个工具要对抗的是无意识的滑向——
+       手指自动敲出域名、回车、40 分钟过去了。真到了专门去改 hosts 的程度，
+       那已经不是习惯而是决定，软件拦不住决定，也不该拦。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">7</span>卸载</h2>
+    <pre><code>launchctl bootout gui/$(id -u)/com.aimoment.macguard
+rm -f ~/Library/LaunchAgents/com.aimoment.macguard.plist
+pkill -x MacGuard
+rm -rf /Applications/MacGuard.app
+
+# 连历史记录一起删（不想留统计数据的话）
+rm -rf ~/Library/Application\ Support/MacGuard</code></pre>
+    <p class="muted">菜单栏的「退出」要等 30 秒延迟确认。单独 <code>pkill</code> 会被
+       launchd 在约 10 秒后拉起，所以得先 <code>bootout</code>。</p>
+  </div>
+
+  <p class="foot">
+    配置文件在 <code>~/Library/Application Support/MacGuard/config.json</code><br>
+    可以直接编辑，改完自动热加载
+  </p>
+
+</div>
+</body>
+</html>

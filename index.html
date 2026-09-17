@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xiniu · App 分发</title>
+<style>
+  :root{
+    --bg:#f2f2f7; --card:#fff; --label:#000;
+    --label2:rgba(60,60,67,.6); --label3:rgba(60,60,67,.3);
+    --sep:rgba(60,60,67,.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#000; --card:#1c1c1e; --label:#fff;
+      --label2:rgba(235,235,245,.6); --label3:rgba(235,235,245,.3);
+      --sep:rgba(84,84,88,.65);
+    }
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; min-height:100vh; background:var(--bg); color:var(--label);
+    font-family:-apple-system,"SF Pro Text",system-ui,"PingFang SC","Helvetica Neue",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex; align-items:center; justify-content:center; padding:28px 16px;
+  }
+  .wrap{ width:100%; max-width:440px; }
+  h1{ font-size:26px; font-weight:700; letter-spacing:-.5px; margin:0 0 4px; }
+  .sub{ font-size:14px; color:var(--label2); margin:0 0 22px; }
+  .app{
+    display:flex; align-items:center; gap:14px; background:var(--card);
+    border-radius:16px; padding:16px; text-decoration:none; color:inherit;
+    margin-bottom:12px; border:1px solid var(--sep);
+  }
+  .app:hover{ border-color:var(--label3); }
+  .icon{
+    width:52px; height:52px; border-radius:13px; flex:0 0 auto;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .icon svg{ width:34px; height:34px; }
+  .app .t{ flex:1 1 auto; min-width:0; }
+  .app .t b{ font-size:16px; font-weight:600; letter-spacing:-.2px; display:block; }
+  .app .t span{ font-size:13px; color:var(--label2); }
+  .app .chev{ color:var(--label3); font-size:20px; flex:0 0 auto; }
+  .foot{
+    font-size:12px; color:var(--label2); text-align:center;
+    margin-top:18px; line-height:1.7;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>xiniu · App 分发</h1>
+    <p class="sub">自用工具集 · 安装前请先看各页的前置要求</p>
+
+    <a class="app" href="macguard/install-mac.html">
+      <span class="icon" style="background:linear-gradient(160deg,#1b2230,#0a0d14)">
+        <!-- 环形进度 + 暂停，与 app 图标同构 -->
+        <svg viewBox="0 0 24 24" fill="none">
+          <defs>
+            <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#3db8f0"/>
+              <stop offset="100%" stop-color="#7359eb"/>
+            </linearGradient>
+          </defs>
+          <path d="M12 3.6a8.4 8.4 0 1 1-8.4 8.4"
+                stroke="url(#mg)" stroke-width="2.6" stroke-linecap="round"/>
+          <rect x="9.4" y="9" width="1.9" height="6" rx=".95" fill="#fff"/>
+          <rect x="12.7" y="9" width="1.9" height="6" rx=".95" fill="#fff"/>
+        </svg>
+      </span>
+      <span class="t">
+        <b>MacGuard</b>
+        <span>防沉迷 · 检测到黑名单域名就打断你</span>
+      </span>
+      <span class="chev">›</span>
+    </a>
+
+    <p class="foot">
+      安装包托管在 GitHub Releases<br>
+      源码仓库需要访问权限
+    </p>
+  </div>
+</body>
+</html>
