@@ -23,6 +23,7 @@ xiniu-APP 的应用分发页。
 ```bash
 cd <macguard 项目目录> && bash tool/release.sh     # MacGuard
 cd <trackflow 项目目录> && scripts/release.sh      # TrackFlow（iOS，Ad Hoc）
+cd <daymark 项目目录>   && scripts/release.sh      # DayMark（iOS，Ad Hoc）
 ```
 
 脚本会把安装包传到本仓库的 Releases，并刷新对应的 `install.html`。
