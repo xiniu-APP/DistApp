@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>安装 Pane 助手 for Mac</title>
+<style>
+  :root{
+    --bg:#f2f2f7; --card:#fff; --label:#000;
+    --label2:rgba(60,60,67,.6); --label3:rgba(60,60,67,.3);
+    --sep:rgba(60,60,67,.12); --accent:#0a84ff; --accent2:#30b0c7;
+    --warn-bg:rgba(255,149,0,.12); --warn-fg:#b25000; --warn-bd:rgba(255,149,0,.35);
+    --code-bg:rgba(60,60,67,.07);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#000; --card:#1c1c1e; --label:#fff;
+      --label2:rgba(235,235,245,.6); --label3:rgba(235,235,245,.3);
+      --sep:rgba(84,84,88,.65);
+      --warn-bg:rgba(255,159,10,.16); --warn-fg:#ffb340; --warn-bd:rgba(255,159,10,.3);
+      --code-bg:rgba(235,235,245,.1);
+    }
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; min-height:100vh; background:var(--bg); color:var(--label);
+    font-family:-apple-system,"SF Pro Text",system-ui,"PingFang SC","Helvetica Neue",sans-serif;
+    -webkit-font-smoothing:antialiased; padding:28px 16px;
+  }
+  .wrap{ width:100%; max-width:520px; margin:0 auto; }
+  .hero{ text-align:center; margin-bottom:24px; }
+  .appicon{
+    width:88px; height:88px; border-radius:20px; margin:0 auto 14px;
+    background:linear-gradient(160deg,#3a4150,#12151b);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 32px -14px rgba(10,132,255,.45);
+  }
+  .appicon svg{ width:58px; height:58px; }
+  h1{ font-size:24px; font-weight:700; letter-spacing:-.4px; margin:0 0 4px; }
+  .ver{ font-size:13px; color:var(--label2); }
+  .card{
+    background:var(--card); border:1px solid var(--sep); border-radius:16px;
+    padding:20px; margin-bottom:14px;
+  }
+  h2{
+    font-size:15px; font-weight:600; margin:0 0 12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  h2 .num{
+    width:20px; height:20px; border-radius:6px; flex:0 0 auto;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff; font-size:11px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  p{ font-size:14px; line-height:1.75; margin:0 0 10px; color:var(--label); }
+  p:last-child{ margin-bottom:0; }
+  .muted{ color:var(--label2); font-size:13px; }
+  ol,ul{ margin:0 0 10px; padding-left:20px; font-size:14px; line-height:1.85; }
+  li{ margin-bottom:4px; }
+  code{
+    background:var(--code-bg); border-radius:5px; padding:2px 6px;
+    font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:12.5px;
+    word-break:break-all;
+  }
+  pre{
+    background:var(--code-bg); border-radius:10px; padding:13px 14px;
+    overflow-x:auto; margin:10px 0;
+  }
+  pre code{ background:none; padding:0; font-size:12.5px; line-height:1.7; }
+  .btn{
+    display:block; background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff; text-decoration:none; border-radius:13px; padding:15px 0;
+    font-size:17px; font-weight:600; text-align:center; margin:4px 0 12px;
+  }
+  .warn{
+    background:var(--warn-bg); border:1px solid var(--warn-bd);
+    border-radius:12px; padding:14px 16px; margin:12px 0;
+  }
+  .warn b{ color:var(--warn-fg); display:block; margin-bottom:6px; font-size:14px; }
+  .warn p{ font-size:13.5px; color:var(--label); margin-bottom:6px; }
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; margin:8px 0; }
+  td{ padding:7px 0; border-bottom:1px solid var(--sep); vertical-align:top; }
+  td:first-child{ width:38%; color:var(--label2); padding-right:12px; }
+  tr:last-child td{ border-bottom:none; }
+  .foot{ font-size:12px; color:var(--label2); text-align:center; margin-top:20px; line-height:1.7; }
+  a{ color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="appicon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <rect x="3.5" y="5.5" width="17" height="13" rx="2.6" stroke="#fff" stroke-width="1.6"/>
+        <path d="M13 5.8v12.4" stroke="#fff" stroke-width="1.6"/>
+        <path d="M6.3 10l2 2-2 2M9.4 14.6h2" stroke="#4dde73" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16.8" cy="12" r="1.5" fill="#ff9f0a"/>
+      </svg>
+    </div>
+    <h1>Pane 助手</h1>
+    <div class="ver">版本 <b>1.0+202609231804</b> · 需要 macOS 15 以上 · Apple Silicon</div>
+  </div>
+
+  <div class="card">
+    <p>装在要被遥控的 Mac 上。它常驻在菜单栏（分屏图标），让 iPhone 上的 <b>Pane</b>
+       通过 WireGuard 看到、操作这台 Mac 的 iTerm2 窗格和 Chrome 等窗口。</p>
+    <p class="muted">iPhone 端从 <a href="install-ios.html">Pane 安装页</a> 装。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">1</span>先准备好</h2>
+    <table>
+      <tr><td>WireGuard</td><td>这台 Mac 要连在同一个 WireGuard 网里（比如 10.0.1.x），手机才能连到它。</td></tr>
+      <tr><td>iTerm2 的 Python 接口</td><td>iTerm2 → 设置 → General → Magic → 勾上 <b>Enable Python API</b>。
+          再在菜单 Scripts → Manage → <b>Install Python Runtime</b> 装一次运行环境。</td></tr>
+    </table>
+    <p class="muted">不用 iTerm2 也能装，只是手机上就只能看普通窗口，看不到终端窗格。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">2</span>下载安装</h2>
+    <a class="btn" href="https://github.com/xiniu-APP/DistApp/releases/download/pane-mac-latest/PaneMac.dmg">下载 PaneMac.dmg</a>
+    <ol>
+      <li>双击挂载 dmg</li>
+      <li>把 <b>PaneMac</b> 拖到旁边的「应用程序」</li>
+      <li>从「应用程序」里打开（别在 dmg 里直接双击运行）</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">3</span>第一次打开会被拦，这样放行</h2>
+    <p>这个包没有经过 Apple 公证，下载后 macOS 会拦住。在终端跑一行就好：</p>
+    <pre><code>xattr -dr com.apple.quarantine /Applications/PaneMac.app && open /Applications/PaneMac.app</code></pre>
+    <p class="muted">或者：先双击打开一次，被拦后去「系统设置 → 隐私与安全性」，往下拉，点「仍要打开」。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">4</span>给它权限</h2>
+    <p>点菜单栏的分屏图标，按提示打开：</p>
+    <table>
+      <tr><td>控制 iTerm2</td><td>第一次会弹「PaneMac 想要控制 iTerm」，点<b>允许</b>。不点的话看不到终端。</td></tr>
+      <tr><td>屏幕录制</td><td>看 Chrome 等普通窗口要用。</td></tr>
+      <tr><td>辅助功能</td><td>在手机上点、滑普通窗口要用。</td></tr>
+      <tr><td>登录时打开</td><td>菜单里勾上，开机自动运行。</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">5</span>在手机上连它</h2>
+    <ol>
+      <li>手机打开 WireGuard 和 Pane</li>
+      <li>点首页顶上那一行（连的是哪台 Mac）→ <b>添加或管理 Mac</b></li>
+      <li>在「WireGuard 里的设备」里找到这台（显示「有 Pane 助手」），点它</li>
+      <li>这台 Mac 上会弹「XX 的 iPhone 想连接这台 Mac」，点<b>允许</b></li>
+    </ol>
+    <p class="muted">以后在首页顶上那一行就能在几台 Mac 之间切换。每台 Mac 的首页窗口分开记。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">6</span>推送（可选）</h2>
+    <p class="muted">Claude Code 做完、等你回复时推送到手机，需要一个 APNs 密钥（.p8）。
+       在菜单栏图标里「推送：选择密钥文件…」装上。每台 Mac 各装一次。</p>
+  </div>
+
+  <p class="foot">安装包托管在 GitHub Releases · 源码仓库需要访问权限</p>
+</div>
+</body>
+</html>
