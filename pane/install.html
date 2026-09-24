@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>安装 Pane</title>
+<style>
+  :root{
+    --bg:#f2f2f7; --card:#fff; --label:#000;
+    --label2:rgba(60,60,67,.6); --label3:rgba(60,60,67,.3);
+    --sep:rgba(60,60,67,.12); --accent:#3a8cff; --accent2:#0a5fd6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#000; --card:#1c1c1e; --label:#fff;
+      --label2:rgba(235,235,245,.6); --label3:rgba(235,235,245,.3);
+      --sep:rgba(84,84,88,.65);
+    }
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; min-height:100vh; background:var(--bg); color:var(--label);
+    font-family:-apple-system,"SF Pro Text",system-ui,"PingFang SC","Helvetica Neue",sans-serif;
+    -webkit-font-smoothing:antialiased; padding:28px 16px;
+  }
+  .wrap{ width:100%; max-width:520px; margin:0 auto; }
+  .hero{ text-align:center; margin-bottom:24px; }
+  .appicon{
+    width:88px; height:88px; border-radius:20px; margin:0 auto 14px; display:block;
+    box-shadow:0 12px 32px -14px rgba(10,95,214,.5);
+  }
+  h1{ font-size:24px; font-weight:700; letter-spacing:-.4px; margin:0 0 4px; }
+  .ver{ font-size:13px; color:var(--label2); }
+  .card{
+    background:var(--card); border:1px solid var(--sep); border-radius:16px;
+    padding:20px; margin-bottom:14px;
+  }
+  h3{ font-size:14px; font-weight:600; margin:18px 0 8px; }
+  p{ font-size:14px; line-height:1.75; margin:0 0 10px; }
+  p:last-child{ margin-bottom:0; }
+  .muted{ color:var(--label2); font-size:13px; }
+  ol{ margin:0 0 10px; padding-left:20px; font-size:14px; line-height:1.85; }
+  .btn{
+    display:block; background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff; text-decoration:none; border-radius:13px; padding:15px 0;
+    font-size:17px; font-weight:600; text-align:center; margin:4px 0 12px;
+  }
+  code{
+    background:rgba(127,127,127,.14); border-radius:5px; padding:2px 6px;
+    font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:12.5px; word-break:break-all;
+  }
+  pre{ background:rgba(127,127,127,.14); border-radius:10px; padding:12px 14px; overflow-x:auto; margin:10px 0; }
+  pre code{ background:none; padding:0; }
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; margin:8px 0; }
+  td{ padding:7px 0; border-bottom:1px solid var(--sep); vertical-align:top; }
+  td:first-child{ width:34%; color:var(--label2); padding-right:12px; }
+  tr:last-child td{ border-bottom:none; }
+  .plat{ display:flex; align-items:center; gap:10px; font-size:17px; font-weight:700; margin:0 0 4px; }
+  .plat svg{ width:22px; height:22px; flex:0 0 auto; }
+  .plat-ver{ font-size:12.5px; color:var(--label2); margin:0 0 12px; }
+  .foot{ font-size:12px; color:var(--label2); text-align:center; margin-top:20px; line-height:1.7; }
+  a{ color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <img class="appicon" src="icon-512.png" alt="">
+    <h1>Pane</h1>
+    <div class="ver">iPhone App + Mac 助手</div>
+  </div>
+
+  <div class="card">
+    <p>在 iPhone 上看、操作 Mac 上的 iTerm2 窗格和 Chrome 等窗口。两边都要装：手机上装 <b>Pane</b>，
+       要被遥控的 Mac 上装 <b>Pane 助手</b>（常驻菜单栏的分屏图标），两边连在同一个 WireGuard 网里。</p>
+  </div>
+
+  <div class="card" id="ios">
+    <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg>iPhone</div>
+    <div class="plat-ver">版本 1.0 (202609241952) · 需要 iOS 18 以上</div>
+    <a class="btn" href="itms-services://?action=download-manifest&amp;url=https://xiniu-app.github.io/DistApp/pane/manifest.plist">安装到 iPhone</a>
+    <ol>
+      <li>用 iPhone 上的 <b>Safari</b> 打开这一页（微信里打开装不了）</li>
+      <li>点上面的按钮，在弹窗里点「安装」，回桌面等图标装好</li>
+    </ol>
+    <p class="muted">这是 Ad Hoc 包，只能装在开发者后台登记过的 iPhone 上；换了新手机要先登记设备再重新打包。
+       描述文件一年过期，过期后重新打包安装即可。以后 App 里会提示更新，覆盖安装，配对和首页窗口都还在。</p>
+  </div>
+
+  <div class="card" id="mac">
+    <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M8.5 20h7M12 16.5V20"/></svg>Mac 助手</div>
+    <div class="plat-ver">版本 1.0 (202609241920) · 需要 macOS 15 以上 · Apple Silicon</div>
+    <a class="btn" href="https://github.com/xiniu-APP/DistApp/releases/download/pane-mac-latest/PaneMac.dmg">下载 PaneMac.dmg</a>
+    <ol>
+      <li>双击挂载 dmg，把 <b>PaneMac</b> 拖到旁边的「应用程序」</li>
+      <li>这个包没有经过 Apple 公证，第一次打开前在终端跑一行：</li>
+    </ol>
+    <pre><code>xattr -dr com.apple.quarantine /Applications/PaneMac.app &amp;&amp; open /Applications/PaneMac.app</code></pre>
+    <p class="muted">或者先双击打开一次，被拦后去「系统设置 → 隐私与安全性」点「仍要打开」。</p>
+
+    <h3>先准备好</h3>
+    <table>
+      <tr><td>WireGuard</td><td>这台 Mac 要连在同一个 WireGuard 网里（比如 10.0.1.x），手机才能连到它。</td></tr>
+      <tr><td>iTerm2 的 Python 接口</td><td>iTerm2 → 设置 → General → Magic → 勾上 <b>Enable Python API</b>。
+          已经勾着但还连不上时，取消再重新勾一次。</td></tr>
+      <tr><td>Python</td><td>不用单独装：助手会自动用 iTerm2 自带的，或者用这台 Mac 上的 Python 3 建一个（第一次要联网）。</td></tr>
+    </table>
+
+    <h3>给它权限</h3>
+    <table>
+      <tr><td>控制 iTerm2</td><td>第一次会弹「PaneMac 想要控制 iTerm」，点<b>允许</b>。不点的话看不到终端。</td></tr>
+      <tr><td>屏幕录制</td><td>看 Chrome 等普通窗口要用。</td></tr>
+      <tr><td>辅助功能</td><td>在手机上点、滑普通窗口要用。</td></tr>
+      <tr><td>登录时打开</td><td>菜单栏图标的菜单里勾上，开机自动运行。</td></tr>
+    </table>
+
+    <h3>在手机上连它</h3>
+    <ol>
+      <li>手机打开 WireGuard 和 Pane</li>
+      <li>点首页顶上那一行 → <b>添加或管理 Mac</b>，在「WireGuard 里的设备」里点这台</li>
+      <li>Mac 上会弹「XX 的 iPhone 想连接这台 Mac」，点<b>允许</b></li>
+    </ol>
+    <p class="muted">推送（可选）：Claude Code 做完、等你回复时推到手机，要在菜单栏图标里「推送：选择密钥文件…」装一个 APNs 密钥（.p8），每台 Mac 各装一次。<br>
+       以后不用再来这一页：助手自己查新版，菜单里点<b>更新到新版</b>就自动替换，权限都还在。</p>
+  </div>
+
+  <p class="foot">
+    更新于 2026-09-24 20:59<br>
+    安装包托管在 GitHub Releases
+  </p>
+
+</div>
+<script>
+  // 在哪种设备上打开，就把那一块放到最前面。
+  const ua = navigator.userAgent;
+  const first = /iPhone|iPad/.test(ua) ? "ios" : /Macintosh/.test(ua) ? "mac" : null;
+  if (first) {
+    const card = document.getElementById(first);
+    document.querySelector(".hero").nextElementSibling.after(card);
+  }
+</script>
+</body>
+</html>
