@@ -80,7 +80,7 @@
   <div class="hero">
     <img class="appicon" src="icon-512.png" alt="">
     <h1>Shelf</h1>
-    <div class="ver">版本 <b>1.0 (202609250010)</b> · iPhone · Mac · 安卓</div>
+    <div class="ver">版本 <b>1.0 (202609250156)</b> · iPhone · Mac · Windows · Linux · 安卓</div>
   </div>
 
   <div class="card">
@@ -110,6 +110,29 @@
     <p class="muted">或者先双击打开一次，被拦后去「系统设置 → 隐私与安全性」点「仍要打开」。需要 macOS 15 以上。更新时重新下载覆盖即可。</p>
   </div>
 
+  <div class="card" id="windows">
+    <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="8" height="7" rx="1"/><rect x="13" y="4" width="8" height="7" rx="1"/><rect x="3" y="13" width="8" height="7" rx="1"/><rect x="13" y="13" width="8" height="7" rx="1"/></svg>Windows</div>
+    <a class="btn" href="https://github.com/xiniu-APP/DistApp/releases/download/shelf-latest/Shelf-windows-x64.zip">下载 Shelf-windows-x64.zip</a>
+    <ol>
+      <li>解压，把 <b>Shelf.exe</b> 放到一个固定的地方（比如「文档」里建个 Shelf 文件夹），双击打开</li>
+      <li>第一次打开 Windows 可能提示「Windows 已保护你的电脑」（这个程序没有微软签名）：点「更多信息」→「仍要运行」</li>
+      <li>要在资源管理器里右键「发送到 → Shelf」：在 Shelf 的设置里打开</li>
+    </ol>
+    <p class="muted">需要 Windows 10 / 11（64 位）。关窗口会藏到右下角托盘，从托盘菜单「退出」才真的退出。命令行也能传：<code>Shelf.exe upload 文件</code>。更新时重新下载覆盖 Shelf.exe。</p>
+  </div>
+
+  <div class="card" id="linux">
+    <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16v12H4z"/><path d="M7 10l3 2-3 2M12 15h5"/></svg>Linux</div>
+    <a class="btn" href="https://github.com/xiniu-APP/DistApp/releases/download/shelf-latest/shelf-linux-amd64.tar.gz">下载 Linux（x86_64）</a>
+    <a class="btn alt" href="https://github.com/xiniu-APP/DistApp/releases/download/shelf-latest/shelf-linux-arm64.tar.gz">下载 Linux（ARM64）</a>
+    <ol>
+      <li>解压后进到文件夹里运行：</li>
+    </ol>
+    <pre><code>tar xzf shelf-linux-*.tar.gz &amp;&amp; cd shelf-linux-* &amp;&amp; ./install.sh</code></pre>
+    <p class="muted">装在自己的目录下，不用 sudo：命令行 <code>shelf</code>、应用菜单里的 Shelf 窗口、文件管理器（Nautilus / Dolphin）右键「上传到 Shelf」。
+      窗口需要 Ubuntu 24.04 / Debian 13 / Fedora 40 以上（GTK 4.14、libadwaita 1.5）；没有桌面的服务器也能用命令行：<code>shelf login</code>、<code>shelf upload 文件</code>。卸载：<code>./uninstall.sh</code>。</p>
+  </div>
+
   <div class="card" id="android">
     <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="9" width="14" height="10" rx="2"/><path d="M8 9a4 4 0 0 1 8 0M8.5 5.5 7 3.5M15.5 5.5 17 3.5"/></svg>安卓</div>
     <a class="btn alt" href="https://github.com/xiniu-APP/DistApp/releases/download/shelf-latest/Shelf.apk">下载 Shelf.apk</a>
@@ -121,7 +144,7 @@
   </div>
 
   <p class="foot">
-    发布于 2026-09-25 00:14<br>
+    发布于 2026-09-25 01:59<br>
     安装包托管在 GitHub Releases
   </p>
 
@@ -129,7 +152,8 @@
 <script>
   // 在哪种设备上打开，就把那一块放到最前面。
   const ua = navigator.userAgent;
-  const first = /iPhone|iPad/.test(ua) ? "ios" : /Android/.test(ua) ? "android" : /Macintosh/.test(ua) ? "mac" : null;
+  const first = /iPhone|iPad/.test(ua) ? "ios" : /Android/.test(ua) ? "android" : /Macintosh/.test(ua) ? "mac"
+    : /Windows/.test(ua) ? "windows" : /Linux/.test(ua) ? "linux" : null;
   if (first) {
     const card = document.getElementById(first);
     document.querySelector(".hero").nextElementSibling.after(card);
