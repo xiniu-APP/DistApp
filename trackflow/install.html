@@ -80,7 +80,7 @@
   <div class="hero">
     <img class="appicon" src="icon-512.png" alt="">
     <h1>TrackFlow</h1>
-    <div class="ver">版本 <b>1.0 (202609242054)</b> · iPhone · Mac · 安卓</div>
+    <div class="ver">版本 <b>1.0 (202609250230)</b> · iPhone · Mac · 安卓 · Windows · Linux</div>
   </div>
 
   <div class="card">
@@ -119,8 +119,29 @@
     <p class="muted">需要 Android 8 以上。更新时重新下载安装，会直接覆盖，登录状态还在。</p>
   </div>
 
+  <div class="card" id="windows">
+    <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3.5 5.5 11 4.5v7H3.5zM13 4.2 20.5 3v8.5H13zM3.5 13H11v7l-7.5-1zM13 13h7.5v8.5L13 20.3z"/></svg>Windows</div>
+    <a class="btn" href="https://github.com/xiniu-APP/DistApp/releases/download/trackflow-latest/TrackFlow-windows-x64.zip">下载 Windows 版（大多数电脑）</a>
+    <ol>
+      <li>下载后右键 zip →「全部解压缩」</li>
+      <li>打开解压出来的文件夹，双击 <b>TrackFlow.exe</b></li>
+      <li>第一次打开如果出现蓝色的「Windows 已保护你的电脑」，点「更多信息」→「仍要运行」</li>
+    </ol>
+    <p class="muted">需要 Windows 10 1809 以上。高通芯片的 Windows 笔记本用 <a href="https://github.com/xiniu-APP/DistApp/releases/download/trackflow-latest/TrackFlow-windows-arm64.zip">ARM64 版</a>。更新时下载新版覆盖即可，登录状态还在。</p>
+  </div>
+
+  <div class="card" id="linux">
+    <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><ellipse cx="12" cy="9" rx="4.5" ry="5.5"/><path d="M7.5 13.5 5 19h14l-2.5-5.5M10.5 8h.01M13.5 8h.01"/></svg>Linux</div>
+    <a class="btn" href="https://github.com/xiniu-APP/DistApp/releases/download/trackflow-latest/TrackFlow-linux-x86_64.deb">下载 TrackFlow.deb</a>
+    <ol>
+      <li>Ubuntu、Debian、Deepin、统信等系统：下载后<b>双击</b>，在「软件」里点「安装」</li>
+      <li>装好后在应用列表里找到 TrackFlow 打开</li>
+    </ol>
+    <p class="muted">需要 64 位（x86_64）系统，带 GNOME 或较新的桌面环境。更新时下载新版再双击安装即可。</p>
+  </div>
+
   <p class="foot">
-    发布于 2026-09-24 20:56<br>
+    发布于 2026-09-25 02:40<br>
     安装包托管在 GitHub Releases
   </p>
 
@@ -128,7 +149,8 @@
 <script>
   // 在哪种设备上打开，就把那一块放到最前面。
   const ua = navigator.userAgent;
-  const first = /iPhone|iPad/.test(ua) ? "ios" : /Android/.test(ua) ? "android" : /Macintosh/.test(ua) ? "mac" : null;
+  const first = /iPhone|iPad/.test(ua) ? "ios" : /Android/.test(ua) ? "android" : /Windows/.test(ua) ? "windows"
+    : /Macintosh/.test(ua) ? "mac" : /Linux/.test(ua) ? "linux" : null;
   if (first) {
     const card = document.getElementById(first);
     document.querySelector(".hero").nextElementSibling.after(card);
