@@ -22,7 +22,7 @@ xiniu-APP 的应用分发页。
 
 ```bash
 cd <macguard 项目目录> && bash tool/release.sh     # MacGuard
-cd <trackflow 项目目录> && scripts/release.sh      # TrackFlow（iOS，Ad Hoc）
+cd <trackflow 项目目录> && scripts/release.sh      # TrackFlow（iPhone Ad Hoc + Mac dmg + 安卓 apk，一个 Release）
 cd <daymark 项目目录>   && scripts/release.sh      # DayMark（iOS，Ad Hoc）
 cd <footprint 项目目录> && scripts/release.sh      # Footprint（iOS，Ad Hoc）
 ```
