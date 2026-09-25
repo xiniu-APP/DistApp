@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>安装 Curfew</title>
+<style>
+  :root{
+    --bg:#f2f2f7; --card:#fff; --label:#000;
+    --label2:rgba(60,60,67,.6); --label3:rgba(60,60,67,.3);
+    --sep:rgba(60,60,67,.12); --accent:#5a4fd0; --accent2:#2a2670;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#000; --card:#1c1c1e; --label:#fff;
+      --label2:rgba(235,235,245,.6); --label3:rgba(235,235,245,.3);
+      --sep:rgba(84,84,88,.65);
+    }
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; min-height:100vh; background:var(--bg); color:var(--label);
+    font-family:-apple-system,"SF Pro Text",system-ui,"PingFang SC","Helvetica Neue",sans-serif;
+    -webkit-font-smoothing:antialiased; padding:28px 16px;
+  }
+  .wrap{ width:100%; max-width:520px; margin:0 auto; }
+  .hero{ text-align:center; margin-bottom:24px; }
+  .appicon{
+    width:88px; height:88px; border-radius:20px; margin:0 auto 14px; display:block;
+    box-shadow:0 12px 32px -14px rgba(42,38,112,.55);
+  }
+  h1{ font-size:24px; font-weight:700; letter-spacing:-.4px; margin:0 0 4px; }
+  .ver{ font-size:13px; color:var(--label2); }
+  .card{
+    background:var(--card); border:1px solid var(--sep); border-radius:16px;
+    padding:20px; margin-bottom:14px;
+  }
+  h3{ font-size:14px; font-weight:600; margin:18px 0 8px; }
+  p{ font-size:14px; line-height:1.75; margin:0 0 10px; }
+  p:last-child{ margin-bottom:0; }
+  .muted{ color:var(--label2); font-size:13px; }
+  ol{ margin:0 0 10px; padding-left:20px; font-size:14px; line-height:1.85; }
+  .btn.alt{ background:linear-gradient(135deg,#34c759,#248a3d); }
+  .btn{
+    display:block; background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff; text-decoration:none; border-radius:13px; padding:15px 0;
+    font-size:17px; font-weight:600; text-align:center; margin:4px 0 12px;
+  }
+  code{
+    background:rgba(127,127,127,.14); border-radius:5px; padding:2px 6px;
+    font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:12.5px; word-break:break-all;
+  }
+  pre{ background:rgba(127,127,127,.14); border-radius:10px; padding:12px 14px; overflow-x:auto; margin:10px 0; }
+  pre code{ background:none; padding:0; }
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; margin:8px 0; }
+  td{ padding:7px 0; border-bottom:1px solid var(--sep); vertical-align:top; }
+  td:first-child{ width:34%; color:var(--label2); padding-right:12px; }
+  tr:last-child td{ border-bottom:none; }
+  .plat{ display:flex; align-items:center; gap:10px; font-size:17px; font-weight:700; margin:0 0 4px; }
+  .plat svg{ width:22px; height:22px; flex:0 0 auto; }
+  .plat-ver{ font-size:12.5px; color:var(--label2); margin:0 0 12px; }
+  .section{ font-size:20px; font-weight:700; margin:28px 4px 4px; }
+  .section-sub{ font-size:13px; color:var(--label2); margin:0 4px 12px; }
+  .foot{ font-size:12px; color:var(--label2); text-align:center; margin-top:20px; line-height:1.7; }
+  a{ color:var(--accent); }
+  @media (prefers-color-scheme: dark){ a{ color:#958ffa; } }
+  .pending{ font-size:15px; font-weight:600; color:var(--label2); text-align:center; padding:14px 0;
+            border:1px dashed var(--sep); border-radius:13px; margin:4px 0 12px; }
+  /* 没有安装包时显示“准备中”：render-page.sh 按 version.json 在不在，把 data-ios / data-android 填成 ready / pending */
+  body[data-ios="pending"] .ios-ready, body[data-ios="ready"] .ios-pending,
+  body[data-android="pending"] .android-ready, body[data-android="ready"] .android-pending{ display:none; }
+</style>
+</head>
+<body data-ios="pending" data-android="pending">
+<div class="wrap">
+
+  <div class="hero">
+    <img class="appicon" src="icon-512.png" alt="">
+    <h1>Curfew</h1>
+    <div class="ver">家长随时一键锁 / 解锁孩子的手机，也能设宵禁时段到点自动锁</div>
+  </div>
+
+  <div class="card">
+    <p>家长的手机和孩子的手机装的是<b>同一个 App</b>，第一次打开时选“我是家长”或“这是孩子的手机”。</p>
+    <p>公开透明：孩子手机上始终写着“受家长管理”，锁定页写明是家长锁的、几点解锁；不读聊天、照片、位置，只管能不能用手机。电话和紧急呼叫不受影响。</p>
+    <ol>
+      <li>先装<b>家长手机</b>，用管理员给的家长连接码加入家庭</li>
+      <li>家长手机上点“加孩子手机”，生成孩子连接码（10 分钟有效）</li>
+      <li>再装<b>孩子手机</b>，按下面对应的步骤设置好，扫码或输入连接码</li>
+    </ol>
+  </div>
+
+  <div class="section">下载</div>
+  <div class="section-sub">家长手机、孩子手机都从这里装</div>
+
+  <div class="card" id="ios">
+    <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg>iPhone</div>
+    <div class="ios-ready">
+      <div class="plat-ver">版本 — · 需要 iOS 16 以上</div>
+      <a class="btn" href="itms-services://?action=download-manifest&amp;url=https://xiniu-app.github.io/DistApp/curfew/manifest.plist">安装到 iPhone</a>
+      <ol>
+        <li>用 iPhone 上的 <b>Safari</b> 打开这一页（微信里打开装不了）</li>
+        <li>点上面的按钮，在弹窗里点「安装」，回桌面等图标装好</li>
+      </ol>
+      <p class="muted">这是 Ad Hoc 包，只能装在开发者后台登记过的 iPhone 上；换了新手机要先登记设备再重新打包。描述文件一年过期，过期后重新安装即可。</p>
+    </div>
+    <div class="ios-pending">
+      <div class="pending">iPhone 版准备中</div>
+      <p class="muted">iPhone 版要等苹果批准“家庭控制”（Family Controls）的分发权限后才能发布。</p>
+    </div>
+  </div>
+
+  <div class="card" id="android">
+    <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="9" width="14" height="10" rx="2"/><path d="M8 9a4 4 0 0 1 8 0M8.5 5.5 7 3.5M15.5 5.5 17 3.5"/></svg>安卓</div>
+    <div class="android-ready">
+      <div class="plat-ver">版本 — · 需要 Android 8 以上</div>
+      <a class="btn alt" href="https://github.com/xiniu-APP/DistApp/releases/download/curfew-android-latest/Curfew.apk">下载 Curfew.apk</a>
+      <ol>
+        <li>用手机浏览器打开这一页，点上面的按钮下载</li>
+        <li>打开下载好的文件安装；第一次会提示「允许安装未知来源的应用」，去设置里允许一下</li>
+      </ol>
+      <p class="muted">以后下载新的安装包覆盖安装，家庭和设置都还在。</p>
+    </div>
+    <div class="android-pending">
+      <div class="pending">安卓版准备中</div>
+    </div>
+  </div>
+
+  <div class="section">孩子手机怎么设置</div>
+  <div class="section-sub">装好后在孩子手机上选“这是孩子的手机”</div>
+
+  <div class="card" id="child-ios">
+    <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg>孩子的 iPhone</div>
+    <ol>
+      <li>孩子的 Apple ID 要在家长的<b>家庭共享</b>里（家长 iPhone：设置 → 家人）</li>
+      <li>在孩子手机上点「请家长批准」，家长在弹窗里输入<b>自己的</b> Apple ID 和密码</li>
+      <li>扫家长手机上的二维码，或输入连接码，给这台手机起个名字</li>
+      <li>允许通知：家长临时锁 / 解锁靠推送送达</li>
+    </ol>
+    <p class="muted">锁定时所有 App 和网页盖上“家长已锁定”的限制页。宵禁时段到点自动锁，不用联网、App 不用开着。批准后孩子删不掉这个 App。</p>
+  </div>
+
+  <div class="card" id="child-android">
+    <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="9" width="14" height="10" rx="2"/><path d="M8 9a4 4 0 0 1 8 0M8.5 5.5 7 3.5M15.5 5.5 17 3.5"/></svg>孩子的安卓手机</div>
+    <ol>
+      <li>打开 App 选“这是孩子的手机”，按引导<b>开启设备管理器</b>（只用来锁屏）</li>
+      <li>允许<b>忽略电池优化</b>，不然后台会被系统关掉</li>
+      <li>国产手机还要打开<b>自启动 / 允许后台运行</b>（App 里按手机品牌给了去哪儿设置）</li>
+      <li>允许通知：通知栏会一直显示“受家长管理”</li>
+      <li>扫家长手机上的二维码，或输入连接码，给这台手机起个名字</li>
+    </ol>
+    <p class="muted">锁定时手机直接锁屏，解开后显示“家长已锁定，XX:XX 解锁”，并带紧急电话按钮。要卸载得先在系统设置里停用设备管理器，停用时家长那边会标红提示。</p>
+  </div>
+
+  <p class="foot">
+    更新于 2026-09-25 13:33<br>
+    安装包托管在 GitHub Releases
+  </p>
+
+</div>
+<script>
+  // 在哪种手机上打开，就把那一块放到“下载”的最前面。
+  const ua = navigator.userAgent;
+  const first = /iPhone|iPad/.test(ua) ? "ios" : /Android/.test(ua) ? "android" : null;
+  if (first) {
+    const card = document.getElementById(first);
+    card.parentNode.querySelector(".section-sub").after(card);
+  }
+</script>
+</body>
+</html>

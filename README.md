@@ -26,6 +26,7 @@ cd <trackflow 项目目录> && scripts/release.sh      # TrackFlow（iPhone Ad H
 cd <shelf 项目目录>     && scripts/release.sh      # Shelf（同上）
 cd <daymark 项目目录>   && scripts/release.sh      # DayMark（iOS，Ad Hoc）
 cd <footprint 项目目录> && scripts/release.sh      # Footprint（iOS，Ad Hoc）
+cd <curfew 项目目录>    && scripts/release.sh      # Curfew（iPhone Ad Hoc；安卓用 scripts/release-android.sh，同一个安装页）
 ```
 
 脚本会把安装包传到本仓库的 Releases，并刷新对应的 `install.html`。
