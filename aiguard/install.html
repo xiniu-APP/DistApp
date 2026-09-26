@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 防护 · 下载</title>
+<style>
+  :root{
+    --bg:#f2f2f7; --card:#fff; --label:#000; --label2:rgba(60,60,67,.6); --label3:rgba(60,60,67,.3);
+    --sep:rgba(60,60,67,.12); --blue:#007aff; --red:#ff3b30; --orange:#ff9500; --green:#34c759; --code:#f2f2f7;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#000; --card:#1c1c1e; --label:#fff; --label2:rgba(235,235,245,.6); --label3:rgba(235,235,245,.3);
+      --sep:rgba(84,84,88,.65); --blue:#0a84ff; --red:#ff453a; --orange:#ff9f0a; --green:#30d158; --code:#2c2c2e;
+    }
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; background:var(--bg); color:var(--label);
+    font-family:-apple-system,"SF Pro Text",system-ui,"PingFang SC","Helvetica Neue",sans-serif;
+    -webkit-font-smoothing:antialiased; padding:28px 16px 40px;
+  }
+  .wrap{ max-width:560px; margin:0 auto; }
+  .head{ display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+  .icon{ width:60px; height:60px; border-radius:15px; flex:0 0 auto; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(160deg,#30b35a,#0a6b3c); }
+  .icon svg{ width:36px; height:36px; }
+  h1{ font-size:26px; font-weight:700; letter-spacing:-.5px; margin:0; }
+  .sub{ font-size:14px; color:var(--label2); margin:2px 0 0; }
+  h2{ font-size:13px; font-weight:600; color:var(--label2); text-transform:none; margin:26px 4px 8px; }
+  .card{ background:var(--card); border-radius:14px; border:1px solid var(--sep); padding:14px 16px; }
+  .card p{ margin:0 0 10px; font-size:15px; line-height:1.55; }
+  .card p:last-child{ margin-bottom:0; }
+  .btn{ display:block; text-align:center; background:var(--blue); color:#fff; text-decoration:none; font-weight:600;
+    font-size:17px; border-radius:12px; padding:13px; }
+  .meta{ font-size:12px; color:var(--label2); text-align:center; margin-top:8px; }
+  ol{ margin:0; padding-left:22px; } ol li{ font-size:15px; line-height:1.55; margin-bottom:12px; } ol li:last-child{ margin-bottom:0; }
+  .cmd{ display:flex; align-items:center; gap:8px; background:var(--code); border-radius:9px; padding:8px 10px; margin-top:6px; }
+  .cmd code{ flex:1 1 auto; min-width:0; font:13px ui-monospace,"SF Mono",Menlo,monospace; overflow-x:auto; white-space:nowrap; }
+  .cmd button{ flex:0 0 auto; border:0; background:none; color:var(--blue); font-size:13px; font-weight:600; cursor:pointer; padding:2px 4px; }
+  .tier{ display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--sep); }
+  .tier:last-child{ border-bottom:0; padding-bottom:0; } .tier:first-child{ padding-top:0; }
+  .dot{ width:10px; height:10px; border-radius:5px; margin-top:6px; flex:0 0 auto; }
+  .tier b{ display:block; font-size:15px; } .tier span{ font-size:14px; color:var(--label2); line-height:1.5; }
+  ul{ margin:0; padding-left:20px; } ul li{ font-size:15px; line-height:1.55; margin-bottom:6px; } ul li:last-child{ margin-bottom:0; }
+  .foot{ font-size:12px; color:var(--label2); text-align:center; margin-top:24px; line-height:1.7; }
+  .foot a{ color:var(--blue); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <span class="icon">
+      <!-- 盾牌里一个对勾 -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3l7 3v5.5c0 4.4-3 8.2-7 9.5-4-1.3-7-5.1-7-9.5V6l7-3z"/>
+        <path d="M8.8 12.2l2.2 2.2 4.3-4.6"/>
+      </svg>
+    </span>
+    <div>
+      <h1>AI 防护</h1>
+      <p class="sub">Claude Code、Codex 跑危险命令前拦一下 · Mac · Linux</p>
+    </div>
+  </div>
+
+  <a class="btn" href="https://github.com/xiniu-APP/DistApp/releases/download/aiguard-latest/aiguard.pyz">下载 aiguard.pyz</a>
+  <p class="meta">版本 202609261945 · 40 KB · 更新于 2026-09-26 19:45</p>
+
+  <h2>安装</h2>
+  <div class="card">
+    <ol>
+      <li>下载（或点上面的按钮）
+        <div class="cmd"><code>curl -fsSLO https://github.com/xiniu-APP/DistApp/releases/download/aiguard-latest/aiguard.pyz</code><button onclick="copy(this)">复制</button></div></li>
+      <li>装到 Claude Code 和 Codex（没装的那个会跳过）
+        <div class="cmd"><code>python3 aiguard.pyz install</code><button onclick="copy(this)">复制</button></div></li>
+      <li>用 Codex 的话：打开 Codex，输入 <b>/hooks</b>，信任 aiguard 这一条（只要一次）。Claude Code 装上马上生效。</li>
+    </ol>
+  </div>
+
+  <h2>它管什么</h2>
+  <div class="card">
+    <div class="tier"><span class="dot" style="background:var(--red)"></span><div><b>直接拦</b>
+      <span>灾难级的：删根目录、系统目录、整个家目录或它下面的一级文件夹、整块盘、当前项目目录；路径里的变量为空时会落到这些地方的；抹盘、格式化、删 Time Machine 备份；强推 main。</span></div></div>
+    <div class="tier"><span class="dot" style="background:var(--orange)"></span><div><b>弹窗确认</b>
+      <span>拿不准的：删项目和临时目录以外的东西、远程电脑上的删除、git reset --hard、git clean -f、强推别的分支。Claude Code 在终端里问；Codex 在 Mac 上弹系统对话框，2 分钟没人点就拦下。</span></div></div>
+    <div class="tier"><span class="dot" style="background:var(--green)"></span><div><b>放行</b>
+      <span>别的所有命令，什么都不输出。</span></div></div>
+  </div>
+  <div class="card" style="margin-top:10px">
+    <p>本机的、<b>ssh 到别的电脑上</b>的、bash -c、docker exec、adb shell 里的命令都会拆开看（现成的防护工具多半看不到 ssh 里面）。</p>
+  </div>
+
+  <h2>不影响 AI</h2>
+  <div class="card">
+    <ul>
+      <li>放行时什么都不输出，AI 的上下文里不多任何东西；只有拦下、确认的那一次，AI 收到一句原因。</li>
+      <li>只看要执行的命令，读写文件、搜索都不经过它；每条命令多花 20 来毫秒。</li>
+      <li>它自己出错一律放行，不会卡住 AI。</li>
+    </ul>
+  </div>
+
+  <h2>其他</h2>
+  <div class="card">
+    <p>看一条命令会怎样：</p>
+    <div class="cmd"><code>python3 aiguard.pyz check 'rm -rf ~/Documents'</code><button onclick="copy(this)">复制</button></div>
+    <p style="margin-top:12px">更新：下载新的，再 install 一次。卸载：</p>
+    <div class="cmd"><code>python3 aiguard.pyz uninstall</code><button onclick="copy(this)">复制</button></div>
+    <p style="margin-top:12px">要求：<b>/usr/bin/python3</b>（Mac 装了 Xcode 命令行工具就有）。拦下和确认记在 ~/.aiguard/log.jsonl。改设置前会备份成 *.bak-aiguard-时间。Windows 暂不支持。</p>
+  </div>
+
+  <p class="foot"><a href="../index.html">‹ 全部 App</a></p>
+</div>
+<script>
+  function copy(b){
+    var t = b.previousElementSibling.textContent;
+    navigator.clipboard.writeText(t).then(function(){ b.textContent = "已复制"; setTimeout(function(){ b.textContent = "复制"; }, 1500); });
+  }
+</script>
+</body>
+</html>
