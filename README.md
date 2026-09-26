@@ -27,6 +27,7 @@ cd <shelf 项目目录>     && scripts/release.sh      # Shelf（同上）
 cd <daymark 项目目录>   && scripts/release.sh      # DayMark（iOS，Ad Hoc）
 cd <footprint 项目目录> && scripts/release.sh      # Footprint（iOS，Ad Hoc）
 cd <curfew 项目目录>    && scripts/release.sh      # Curfew（iPhone Ad Hoc；安卓用 scripts/release-android.sh，同一个安装页）
+cd <aiguard 项目目录>   && ./release.sh            # AI 防护（一个 aiguard.pyz，Claude Code / Codex 的钩子）
 ```
 
 脚本会把安装包传到本仓库的 Releases，并刷新对应的 `install.html`。
