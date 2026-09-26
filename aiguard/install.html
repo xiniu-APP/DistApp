@@ -65,7 +65,7 @@
   </div>
 
   <a class="btn" href="https://github.com/xiniu-APP/DistApp/releases/download/aiguard-latest/aiguard.pyz">下载 aiguard.pyz</a>
-  <p class="meta">版本 202609262014 · 40 KB · 更新于 2026-09-26 20:14</p>
+  <p class="meta">版本 202609262102 · 40 KB · 更新于 2026-09-26 21:02</p>
 
   <h2>安装</h2>
   <div class="card">
@@ -74,7 +74,34 @@
         <div class="cmd"><code>curl -fsSLO https://github.com/xiniu-APP/DistApp/releases/download/aiguard-latest/aiguard.pyz</code><button onclick="copy(this)">复制</button></div></li>
       <li>装到 Claude Code 和 Codex（没装的那个会跳过）
         <div class="cmd"><code>python3 aiguard.pyz install</code><button onclick="copy(this)">复制</button></div></li>
-      <li>用 Codex 的话：打开 Codex，输入 <b>/hooks</b>，信任 aiguard 这一条（只要一次）。Claude Code 装上马上生效。</li>
+      <li>Claude Code 装上马上生效；Codex 还要信任一次，见下面“在 Codex 里怎么用”。</li>
+    </ol>
+  </div>
+
+  <h2>在 Claude Code 里怎么用</h2>
+  <div class="card">
+    <ol>
+      <li><b>装好就生效</b>，不用重启，正在开着的会话也算。平时什么变化都没有。</li>
+      <li><b>灾难级的命令</b>直接拦下，不会执行。AI 会收到一句“AI 防护拦下了这条命令：原因”，一般会自己换成安全的写法。
+        确实要做的话，你自己在 Claude Code 里输入 <b>!</b> 加这条命令执行（! 开头的是你直接跑的，不经过防护）。</li>
+      <li><b>拿不准的命令</b>：终端底部出现 Claude Code 自己的确认，写着“AI 防护：原因。确认要执行吗？”，选“是”才执行。
+        人在外面，用手机看着这个终端（比如 Pane）也能选。</li>
+      <li>试一下：让 Claude 执行下面这条（根目录下不存在的文件夹，就算没拦住也删不了任何东西），应该被拦下：
+        <div class="cmd"><code>rm -rf /aiguard-test</code><button onclick="copy(this)">复制</button></div></li>
+    </ol>
+  </div>
+
+  <h2>在 Codex 里怎么用</h2>
+  <div class="card">
+    <ol>
+      <li><b>先信任一次</b>：装好后打开 Codex，它会提示 <b>Hooks need review</b>。选 <b>1. Review hooks</b>，回车，
+        看到 PreToolUse 这一条（Source 是 <code>~/.codex/hooks.json</code>，Command 里有 <code>aiguard.py --agent codex</code>），
+        按 <b>t</b> 信任。也可以直接选 <b>2. Trust all and continue</b>。以后在 Codex 里输入 <b>/hooks</b> 随时能看，
+        PreToolUse 那一行 Active 是 1 就是在管着。只要一次，以后更新 AI 防护不用重新信任。</li>
+      <li>平时什么变化都没有。<b>灾难级的命令</b>直接拦下，AI 会收到原因。</li>
+      <li><b>拿不准的命令</b>：Codex 的钩子还不支持在终端里问，所以先拦下，AI 会把这条命令原样告诉你、说明为什么要执行。
+        你同意的话，在 Codex 里输入 <b>!</b> 加这条命令自己执行（! 开头的是你直接跑的，不经过防护，AI 也没法冒充）。</li>
+      <li>没信任的话钩子不跑，Codex 启动时会一直提示 Hooks need review。</li>
     </ol>
   </div>
 
@@ -106,7 +133,9 @@
     <div class="cmd"><code>python3 aiguard.pyz check 'rm -rf ~/Documents'</code><button onclick="copy(this)">复制</button></div>
     <p style="margin-top:12px">更新：下载新的，再 install 一次。卸载：</p>
     <div class="cmd"><code>python3 aiguard.pyz uninstall</code><button onclick="copy(this)">复制</button></div>
-    <p style="margin-top:12px">要求：<b>/usr/bin/python3</b>（Mac 装了 Xcode 命令行工具就有）。拦下和确认记在 ~/.aiguard/log.jsonl。改设置前会备份成 *.bak-aiguard-时间。Windows 暂不支持。</p>
+    <p style="margin-top:12px">看拦过、问过哪些命令：</p>
+    <div class="cmd"><code>tail ~/.aiguard/log.jsonl</code><button onclick="copy(this)">复制</button></div>
+    <p style="margin-top:12px">要求：<b>/usr/bin/python3</b>（Mac 装了 Xcode 命令行工具就有）。改设置前会备份成 *.bak-aiguard-时间。Windows 暂不支持。</p>
   </div>
 
   <p class="foot"><a href="../index.html">‹ 全部 App</a></p>
