@@ -78,7 +78,8 @@
 
   <div class="card tip">
     <p><b>管什么用</b>：Mac 内存一紧，系统会把管权限的 tccd 关掉，之后 iTerm2 里读写外置盘全报 <code>Operation not permitted</code>，新开窗口也没用，要重启 iTerm2 才好。
-       急救在手机上告诉你 iTerm2 现在还能不能读外置盘，一键重启 iTerm2：窗格里的程序（Claude 等）不会断，窗格摆回原来的窗口、标签页和分屏位置。</p>
+       急救在手机上告诉你 iTerm2 现在还能不能读外置盘，一键重启 iTerm2：窗格里的程序（Claude 等）不会断，窗格摆回原来的窗口、标签页和分屏位置。
+       还能直接看、点 Mac 的屏幕（连系统自带的屏幕共享），在外面也能点掉“xx 想要控制 iTerm”这类授权框。</p>
   </div>
 
   <div class="card">
@@ -91,7 +92,7 @@
 
   <div class="card" id="ios">
     <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg>iPhone</div>
-    <div class="plat-ver">版本 1.0 (202609261210) · 大小 0.3 MB · 需要 iOS 18 以上</div>
+    <div class="plat-ver">版本 1.0 (202609261238) · 大小 0.4 MB · 需要 iOS 18 以上</div>
     <a class="btn" href="itms-services://?action=download-manifest&amp;url=https://xiniu-app.github.io/DistApp/rescue/manifest.plist">安装到 iPhone</a>
     <ol>
       <li>用 iPhone 上的 <b>Safari</b> 打开这一页（微信里打开装不了）</li>
@@ -131,6 +132,8 @@
           这个框只有坐在电脑前才点得到（远程点不了），所以装好当场就点掉。没弹或者当时没点，之后在菜单栏急救图标里点<b>允许控制 iTerm2</b>。</td></tr>
       <tr><td>iTerm2 的 Python 接口</td><td>iTerm2 → 设置 → General → Magic → 勾上 <b>Enable Python API</b>（用过 Pane 的已经勾了）。</td></tr>
       <tr><td>开机自动打开</td><td>不用设，助手自己会登记。</td></tr>
+      <tr><td>屏幕共享</td><td>手机上的「看屏幕」要用：系统设置 → 通用 → 共享 → 打开<b>屏幕共享</b>。手机上用 Mac 的用户名和登录密码连。
+          系统的授权框、密码框只能真人点，这一页就是用来在外面点它们的。</td></tr>
     </table>
     <p class="muted">没给“控制 iTerm2”时也能重启 iTerm2，只是窗格不会摆回原位，手机上会提示还缺这个授权。</p>
 
@@ -144,7 +147,7 @@
   </div>
 
   <p class="foot">
-    更新于 2026-09-26 12:12<br>
+    更新于 2026-09-26 12:38<br>
     安装包托管在 GitHub Releases
   </p>
 
