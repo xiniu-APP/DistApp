@@ -59,6 +59,8 @@
   .gh h2{ font-size:22px; font-weight:700; letter-spacing:-.02em; margin:0; }
   .gh span{ font-size:14px; color:var(--label2); }
   .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(380px, 1fr)); gap:16px; }
+  /* 一组里落单的最后一张占满一行，不留空洞 */
+  .grid > .app:last-child:nth-child(odd){ grid-column:1 / -1; }
 
   /* 卡片 */
   .app{ display:flex; flex-direction:column; gap:12px; padding:18px 18px 16px; border-radius:22px; background:var(--card);
