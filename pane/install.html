@@ -162,8 +162,20 @@
       <li>双击运行。它会自己装好，常驻在右下角托盘（分屏图标），以后开机自动运行</li>
       <li>第一次会弹一次管理员确认，是给防火墙放行手机的连接，点“是”</li>
     </ol>
-    <p class="muted">Windows 的普通窗口（浏览器等）手机上能看、能点。终端要用 WSL 里的 tmux：先装 WSL（管理员 PowerShell 里 <code>wsl --install</code>），
-       助手会自己在 WSL 里装好终端部分；终端开在 tmux 里（<code>tmux new -A -s main</code>）。
+    <h3>支持哪些终端</h3>
+    <table>
+      <tr><td>WSL 里的 tmux</td><td><b>现在就能用。</b>先装 WSL（管理员 PowerShell 里 <code>wsl --install</code>），助手会自己在 WSL 里装好终端部分；
+          在 WSL 里装 tmux（<code>sudo apt install tmux</code>），终端开在 tmux 里：<code>tmux new -A -s main</code>。不在 tmux 里的终端手机上看不到。</td></tr>
+      <tr><td>WezTerm</td><td><b>还在做，暂时不能用。</b>做好以后不用 WSL、不用 tmux，PowerShell 和 Windows 版的 Claude、Codex 都能直接看。</td></tr>
+    </table>
+
+    <h3>在 tmux 里用 Codex</h3>
+    <p>Codex 默认在 tmux 里用“全屏”模式，对话不留在终端历史里，手机上往上翻不了。在 WSL 里的 <code>~/.codex/config.toml</code> 加上：</p>
+    <pre><code>[tui]
+alternate_screen = "never"</code></pre>
+    <p class="muted">改完退出 Codex 再打开（<code>codex resume --last</code> 接着原来的对话）。Claude Code 不用设置。</p>
+
+    <p class="muted">Windows 的普通窗口（浏览器等）手机上能看、能点。
        新手机连上来时托盘会弹“允许”，人不在电脑前就在手机上输配对口令（默认 123456，托盘菜单里改）。有新版时托盘菜单里会出现“更新到新版”。</p>
   </div>
 
@@ -178,11 +190,16 @@
       <li>装好后浏览器打开 <b>http://那台机器的地址:7789</b>，用配对口令（默认 123456）登录管理页：改口令、看连着的手机、装推送密钥、一键更新</li>
     </ol>
     <p class="muted">有 systemd 的话自动装成开机服务。服务器上没法弹“允许”，新手机第一次连时在手机上输配对口令。只能看 tmux 里的窗格，没有普通窗口画面。</p>
+
+    <h3>在 tmux 里用 Codex</h3>
+    <p>和 Windows 一样：在 <code>~/.codex/config.toml</code> 加上下面两行，不然手机上往上翻不了 Codex 的对话。Claude Code 不用设置。</p>
+    <pre><code>[tui]
+alternate_screen = "never"</code></pre>
   </div>
   </div>
 
   <p class="foot">
-    更新于 2026-09-27 19:36<br>
+    更新于 2026-09-27 19:41<br>
     安装包托管在 GitHub Releases
   </p>
 
