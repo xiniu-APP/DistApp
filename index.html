@@ -2,83 +2,177 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
 <title>xiniu · App 分发</title>
 <style>
   :root{
-    --bg:#f2f2f7; --card:#fff; --label:#000;
-    --label2:rgba(60,60,67,.6); --label3:rgba(60,60,67,.3);
-    --sep:rgba(60,60,67,.12);
+    --bg:#f5f5f7; --card:#fff; --label:#1d1d1f;
+    --label2:rgba(60,60,67,.62); --label3:rgba(60,60,67,.32);
+    --sep:rgba(60,60,67,.10); --fill:rgba(118,118,128,.10); --fill2:rgba(118,118,128,.16);
+    --accent:#0071e3; --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px -12px rgba(0,0,0,.12);
+    --shadow-hover:0 2px 4px rgba(0,0,0,.05),0 18px 40px -16px rgba(0,0,0,.22);
+    --bar:rgba(245,245,247,.72);
   }
   @media (prefers-color-scheme: dark){
     :root{
-      --bg:#000; --card:#1c1c1e; --label:#fff;
-      --label2:rgba(235,235,245,.6); --label3:rgba(235,235,245,.3);
-      --sep:rgba(84,84,88,.65);
+      --bg:#000; --card:#1c1c1e; --label:#f5f5f7;
+      --label2:rgba(235,235,245,.62); --label3:rgba(235,235,245,.30);
+      --sep:rgba(84,84,88,.55); --fill:rgba(118,118,128,.20); --fill2:rgba(118,118,128,.30);
+      --accent:#2997ff; --shadow:0 0 0 .5px rgba(255,255,255,.06);
+      --shadow-hover:0 0 0 .5px rgba(255,255,255,.14),0 18px 40px -18px rgba(0,0,0,.9);
+      --bar:rgba(0,0,0,.66);
     }
   }
   *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
   body{
     margin:0; min-height:100vh; background:var(--bg); color:var(--label);
     font-family:-apple-system,"SF Pro Text",system-ui,"PingFang SC","Helvetica Neue",sans-serif;
-    -webkit-font-smoothing:antialiased;
-    display:flex; align-items:center; justify-content:center; padding:28px 16px;
+    -webkit-font-smoothing:antialiased; letter-spacing:-.01em;
   }
-  .wrap{ width:100%; max-width:440px; }
-  h1{ font-size:26px; font-weight:700; letter-spacing:-.5px; margin:0 0 4px; }
-  .sub{ font-size:14px; color:var(--label2); margin:0 0 22px; }
-  .app{
-    display:flex; align-items:center; gap:14px; background:var(--card);
-    border-radius:16px; padding:16px; text-decoration:none; color:inherit;
-    margin-bottom:12px; border:1px solid var(--sep);
+  .wrap{ max-width:1000px; margin:0 auto; padding:0 max(20px, env(safe-area-inset-left)) 56px; }
+
+  /* 顶部 */
+  header{ padding:64px 0 26px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; color:var(--label2); margin-bottom:14px; }
+  .brand i{ width:22px; height:22px; border-radius:7px; background:linear-gradient(145deg,#5e5ce6,#0a84ff); display:inline-block; }
+  h1{ font-size:clamp(34px, 5vw, 52px); line-height:1.06; font-weight:700; letter-spacing:-.035em; margin:0 0 12px; }
+  .lead{ font-size:clamp(16px, 1.6vw, 19px); line-height:1.5; color:var(--label2); margin:0; max-width:640px; }
+
+  /* 按设备筛选：吸顶的毛玻璃条 */
+  .filters{ position:sticky; top:0; z-index:5; margin:0 calc(-1 * max(20px, env(safe-area-inset-left))); padding:12px max(20px, env(safe-area-inset-left));
+    background:var(--bar); -webkit-backdrop-filter:saturate(180%) blur(20px); backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:.5px solid transparent; transition:border-color .2s; }
+  .filters.stuck{ border-bottom-color:var(--sep); }
+  .seg{ display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; }
+  .seg::-webkit-scrollbar{ display:none; }
+  .seg button{ flex:0 0 auto; border:0; font:inherit; font-size:14px; font-weight:500; color:var(--label);
+    background:var(--fill); padding:8px 15px; border-radius:999px; cursor:pointer; transition:background .15s,color .15s; }
+  .seg button:hover{ background:var(--fill2); }
+  .seg button.on{ background:var(--label); color:var(--bg); }
+
+  /* 分组 */
+  .group{ margin-top:34px; }
+  .group[hidden]{ display:none; }
+  .gh{ display:flex; align-items:baseline; gap:12px; margin:0 2px 14px; }
+  .gh h2{ font-size:22px; font-weight:700; letter-spacing:-.02em; margin:0; }
+  .gh span{ font-size:14px; color:var(--label2); }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(380px, 1fr)); gap:16px; }
+
+  /* 卡片 */
+  .app{ display:flex; flex-direction:column; gap:12px; padding:18px 18px 16px; border-radius:22px; background:var(--card);
+    color:inherit; text-decoration:none; box-shadow:var(--shadow); transition:transform .2s ease, box-shadow .2s ease; }
+  .app:hover{ transform:translateY(-2px); box-shadow:var(--shadow-hover); }
+  .app:active{ transform:scale(.99); }
+  .app[hidden]{ display:none; }
+  .top{ display:flex; align-items:center; gap:14px; }
+  .icon{ width:58px; height:58px; border-radius:14px; flex:0 0 auto; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 12px -4px rgba(0,0,0,.28), inset 0 0 0 .5px rgba(255,255,255,.12); }
+  .icon svg{ width:36px; height:36px; }
+  .name{ flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:2px; }
+  .name b{ font-size:18px; font-weight:600; letter-spacing:-.02em; }
+  .name small{ font-size:13px; color:var(--label2); }
+  .go{ width:28px; height:28px; border-radius:50%; background:var(--fill); color:var(--label2); flex:0 0 auto;
+    display:flex; align-items:center; justify-content:center; transition:background .15s,color .15s; }
+  .go svg{ width:14px; height:14px; }
+  .app:hover .go{ background:var(--accent); color:#fff; }
+  .desc{ margin:0; font-size:15px; line-height:1.55; color:var(--label2); flex:1 1 auto; }
+  .chips{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+  .chip{ font-size:12px; font-weight:500; padding:3px 9px; border-radius:7px; background:var(--fill); color:var(--label); }
+  .chip.srv{ background:transparent; box-shadow:inset 0 0 0 1px var(--sep); color:var(--label2); }
+  .plus{ font-size:12px; color:var(--label3); margin:0 2px 0 4px; }
+
+  .empty{ display:none; text-align:center; color:var(--label2); padding:60px 0 20px; font-size:15px; }
+  .empty.show{ display:block; }
+  footer{ margin-top:48px; padding-top:20px; border-top:.5px solid var(--sep); font-size:13px; line-height:1.7; color:var(--label2);
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; }
+
+  @media (max-width:520px){
+    header{ padding-top:40px; }
+    .grid{ grid-template-columns:1fr; gap:12px; }
+    .app{ border-radius:18px; padding:16px; }
+    .icon{ width:52px; height:52px; border-radius:12px; }
+    .icon svg{ width:32px; height:32px; }
   }
-  .app:hover{ border-color:var(--label3); }
-  .icon{
-    width:52px; height:52px; border-radius:13px; flex:0 0 auto;
-    display:flex; align-items:center; justify-content:center;
-  }
-  .icon svg{ width:34px; height:34px; }
-  .app .t{ flex:1 1 auto; min-width:0; }
-  .app .t b{ font-size:16px; font-weight:600; letter-spacing:-.2px; display:block; }
-  .app .t span{ font-size:13px; color:var(--label2); }
-  .app .chev{ color:var(--label3); font-size:20px; flex:0 0 auto; }
-  .foot{
-    font-size:12px; color:var(--label2); text-align:center;
-    margin-top:18px; line-height:1.7;
-  }
+  @media (prefers-reduced-motion: reduce){ .app,.go,.seg button{ transition:none; } .app:hover{ transform:none; } }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>xiniu · App 分发</h1>
-    <p class="sub">自用工具集 · 安装前请先看各页的前置要求</p>
+    <header>
+      <div class="brand"><i></i>xiniu</div>
+      <h1>App 分发</h1>
+      <p class="lead">团队自用的 12 个工具。点进去按页面上的步骤装，装之前先看看前置要求。</p>
+    </header>
 
-    <a class="app" href="macguard/install-mac.html">
-      <span class="icon" style="background:linear-gradient(160deg,#1b2230,#0a0d14)">
-        <!-- 环形进度 + 暂停，与 app 图标同构 -->
+    <nav class="filters" aria-label="按设备筛选"><div class="seg"><button class="on" data-f="">全部</button><button data-f="iPhone">iPhone</button><button data-f="iPad">iPad</button><button data-f="安卓">安卓</button><button data-f="Mac">Mac</button><button data-f="Windows">Windows</button><button data-f="Linux">Linux</button></div></nav>
+
+    <section class="group">
+      <div class="gh"><h2>开发与远程</h2><span>人不在电脑前，也能看、能管</span></div>
+      <div class="grid">
+      <a class="app" href="pane/install.html" data-p="iPhone 安卓 Mac Windows Linux">
+        <div class="top">
+          <span class="icon" style="background:linear-gradient(160deg,#3a4150,#12151b)"><!-- 分成两格的窗口，左格 >_，右格一个橙点，与 app 图标同构 -->
         <svg viewBox="0 0 24 24" fill="none">
-          <defs>
-            <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#3db8f0"/>
-              <stop offset="100%" stop-color="#7359eb"/>
-            </linearGradient>
-          </defs>
-          <path d="M12 3.6a8.4 8.4 0 1 1-8.4 8.4"
-                stroke="url(#mg)" stroke-width="2.6" stroke-linecap="round"/>
-          <rect x="9.4" y="9" width="1.9" height="6" rx=".95" fill="#fff"/>
-          <rect x="12.7" y="9" width="1.9" height="6" rx=".95" fill="#fff"/>
-        </svg>
-      </span>
-      <span class="t">
-        <b>MacGuard</b>
-        <span>防沉迷 · 检测到黑名单域名就打断你</span>
-      </span>
-      <span class="chev">›</span>
-    </a>
-
-    <a class="app" href="trackflow/install.html">
-      <span class="icon" style="background:linear-gradient(160deg,#3395ff,#005ce6)">
-        <!-- 三行任务，第一行已完成，与 app 图标同构 -->
+          <rect x="3.5" y="5.5" width="17" height="13" rx="2.6" stroke="#fff" stroke-width="1.6"/>
+          <path d="M13 5.8v12.4" stroke="#fff" stroke-width="1.6"/>
+          <path d="M6.3 10l2 2-2 2M9.4 14.6h2" stroke="#4dde73" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="16.8" cy="12" r="1.5" fill="#ff9f0a"/>
+        </svg></span>
+          <span class="name"><b>Pane</b><small>远程窗口</small></span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="desc">手机上看、操作电脑上的终端窗格和窗口，还能打开、关闭电脑上的程序</p>
+        <div class="chips"><span class="chip">iPhone</span><span class="chip">安卓</span><span class="plus">＋ 电脑端</span><span class="chip srv">Mac</span><span class="chip srv">Windows</span><span class="chip srv">Linux</span></div>
+      </a>
+      <a class="app" href="atlas/install.html" data-p="iPad 安卓 Mac Windows Linux">
+        <div class="top">
+          <span class="icon" style="background:linear-gradient(160deg,#4aa3ff,#0a5fd6)"><!-- 白色文件夹加地球，与 app 图标同构 -->
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M3.5 7.2c0-1 .8-1.7 1.7-1.7h4l1.8 2h7.8c1 0 1.7.8 1.7 1.7v8.1c0 1-.8 1.7-1.7 1.7H5.2c-1 0-1.7-.8-1.7-1.7z" fill="#fff"/>
+          <circle cx="12" cy="13.2" r="3.4" stroke="#0a5fd6" stroke-width="1.2"/>
+          <path d="M8.6 13.2h6.8M12 9.8c-1 1-1.4 2.1-1.4 3.4s.4 2.4 1.4 3.4c1-1 1.4-2.1 1.4-3.4S13 10.8 12 9.8z" stroke="#0a5fd6" stroke-width="1.1"/>
+        </svg></span>
+          <span class="name"><b>Atlas</b><small>文件浏览</small></span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="desc">平板上浏览 WireGuard 网里几台电脑的文件，横屏左边目录、右边预览</p>
+        <div class="chips"><span class="chip">iPad</span><span class="chip">安卓</span><span class="plus">＋ 电脑端</span><span class="chip srv">Mac</span><span class="chip srv">Windows</span><span class="chip srv">Linux</span></div>
+      </a>
+      <a class="app" href="rescue/install.html" data-p="iPhone 安卓 Mac">
+        <div class="top">
+          <span class="icon" style="background:linear-gradient(160deg,#ff453a,#b3000f)"><!-- 白色十字，与 app 图标同构 -->
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9.6 4.5h4.8v5.1h5.1v4.8h-5.1v5.1H9.6v-5.1H4.5V9.6h5.1z" fill="#fff"/>
+        </svg></span>
+          <span class="name"><b>急救</b><small>iTerm2 急救</small></span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="desc">人不在电脑前时，重启卡住的 iTerm2，窗格摆回原位</p>
+        <div class="chips"><span class="chip">iPhone</span><span class="chip">安卓</span><span class="plus">＋ 电脑端</span><span class="chip srv">Mac</span></div>
+      </a>
+      <a class="app" href="aiguard/install.html" data-p="Mac Linux">
+        <div class="top">
+          <span class="icon" style="background:linear-gradient(160deg,#30b35a,#0a6b3c)"><!-- 盾牌里一个对勾 -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l7 3v5.5c0 4.4-3 8.2-7 9.5-4-1.3-7-5.1-7-9.5V6l7-3z"/>
+          <path d="M8.8 12.2l2.2 2.2 4.3-4.6"/>
+        </svg></span>
+          <span class="name"><b>AI 防护</b><small>危险命令拦截</small></span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="desc">Claude Code、Codex 跑危险命令前拦一下，ssh 里的也看</p>
+        <div class="chips"><span class="chip">Mac</span><span class="chip">Linux</span></div>
+      </a>
+      </div>
+    </section>
+    <section class="group">
+      <div class="gh"><h2>团队协作</h2><span>一起干活用</span></div>
+      <div class="grid">
+      <a class="app" href="trackflow/install.html" data-p="iPhone 安卓 Mac">
+        <div class="top">
+          <span class="icon" style="background:linear-gradient(160deg,#3395ff,#005ce6)"><!-- 三行任务，第一行已完成，与 app 图标同构 -->
         <svg viewBox="0 0 24 24" fill="none">
           <circle cx="6.5" cy="7" r="2.3" fill="#fff"/>
           <path d="M5.4 7.1l.8.8 1.5-1.7" stroke="#1a73f0" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
@@ -87,34 +181,35 @@
           <rect x="10.5" y="10.9" width="9.5" height="2.2" rx="1.1" fill="#fff"/>
           <circle cx="6.5" cy="17" r="2" stroke="#fff" stroke-width="1.1"/>
           <rect x="10.5" y="15.9" width="6.5" height="2.2" rx="1.1" fill="#fff"/>
-        </svg>
-      </span>
-      <span class="t">
-        <b>TrackFlow</b>
-        <span>团队任务 · 组织、分组、任务和评论 · iPhone · Mac · 安卓</span>
-      </span>
-      <span class="chev">›</span>
-    </a>
-
-    <a class="app" href="shelf/install.html">
-      <span class="icon" style="background:linear-gradient(160deg,#1ab8bd,#00738f)">
-        <!-- 托盘加向上的箭头，与 app 图标同构 -->
+        </svg></span>
+          <span class="name"><b>TrackFlow</b><small>团队任务</small></span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="desc">组织、分组、任务和评论</p>
+        <div class="chips"><span class="chip">iPhone</span><span class="chip">安卓</span><span class="chip">Mac</span></div>
+      </a>
+      <a class="app" href="shelf/install.html" data-p="iPhone 安卓 Mac Windows Linux">
+        <div class="top">
+          <span class="icon" style="background:linear-gradient(160deg,#1ab8bd,#00738f)"><!-- 托盘加向上的箭头，与 app 图标同构 -->
         <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 14.5V4.5M8.3 8.2 12 4.5l3.7 3.7"/>
           <path d="M5 13.5v5.5h14v-5.5"/>
           <path d="M5 15h3.5l1 1.6h5l1-1.6H19"/>
-        </svg>
-      </span>
-      <span class="t">
-        <b>Shelf</b>
-        <span>团队文件中转 · 传到服务器，一键复制路径 · iPhone · Mac · Windows · Linux · 安卓</span>
-      </span>
-      <span class="chev">›</span>
-    </a>
-
-    <a class="app" href="daymark/install-ios.html">
-      <span class="icon" style="background:linear-gradient(160deg,#ffa833,#fa6b14)">
-        <!-- 日历格子，中间一行连成一条（连续打卡），与 app 图标同构 -->
+        </svg></span>
+          <span class="name"><b>Shelf</b><small>文件中转</small></span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="desc">传到服务器，一键复制路径</p>
+        <div class="chips"><span class="chip">iPhone</span><span class="chip">安卓</span><span class="chip">Mac</span><span class="chip">Windows</span><span class="chip">Linux</span></div>
+      </a>
+      </div>
+    </section>
+    <section class="group">
+      <div class="gh"><h2>个人记录</h2><span>记下自己的事</span></div>
+      <div class="grid">
+      <a class="app" href="daymark/install-ios.html" data-p="iPhone">
+        <div class="top">
+          <span class="icon" style="background:linear-gradient(160deg,#ffa833,#fa6b14)"><!-- 日历格子，中间一行连成一条（连续打卡），与 app 图标同构 -->
         <svg viewBox="0 0 24 24" fill="none">
           <circle cx="5.5" cy="7.5" r="1.7" fill="#fff" opacity=".4"/>
           <circle cx="9.8" cy="7.5" r="1.7" fill="#fff"/>
@@ -126,142 +221,124 @@
           <circle cx="9.8" cy="16.5" r="1.7" fill="#fff" opacity=".4"/>
           <circle cx="14.1" cy="16.5" r="1.7" fill="#fff" opacity=".4"/>
           <circle cx="18.4" cy="16.5" r="1.7" fill="#fff"/>
-        </svg>
-      </span>
-      <span class="t">
-        <b>DayMark</b>
-        <span>打卡日历 · 每件事一个日历，点一下就记上 · iPhone</span>
-      </span>
-      <span class="chev">›</span>
-    </a>
-
-    <a class="app" href="footprint/install-ios.html">
-      <span class="icon" style="background:linear-gradient(160deg,#34c1a4,#0a8f7a)">
-        <!-- 图钉里一颗星，与 app 图标同构 -->
+        </svg></span>
+          <span class="name"><b>DayMark</b><small>打卡日历</small></span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="desc">每件事一个日历，点一下就记上</p>
+        <div class="chips"><span class="chip">iPhone</span></div>
+      </a>
+      <a class="app" href="footprint/install-ios.html" data-p="iPhone">
+        <div class="top">
+          <span class="icon" style="background:linear-gradient(160deg,#34c1a4,#0a8f7a)"><!-- 图钉里一颗星，与 app 图标同构 -->
         <svg viewBox="0 0 24 24" fill="none">
           <path d="M12 21c4.2-5.1 6.3-8.6 6.3-11.2A6.3 6.3 0 0 0 5.7 9.8C5.7 12.4 7.8 15.9 12 21z" fill="#fff"/>
           <path d="M12 5.9l1.5 3.1 3.4.4-2.5 2.3.7 3.4-3.1-1.7-3.1 1.7.7-3.4-2.5-2.3 3.4-.4z" fill="#f5a623"/>
-        </svg>
-      </span>
-      <span class="t">
-        <b>Footprint</b>
-        <span>地点打分 · 吃过的餐厅、玩过的地方，多次评价 · iPhone</span>
-      </span>
-      <span class="chev">›</span>
-    </a>
-
-    <a class="app" href="aiguard/install.html">
-      <span class="icon" style="background:linear-gradient(160deg,#30b35a,#0a6b3c)">
-        <!-- 盾牌里一个对勾 -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 3l7 3v5.5c0 4.4-3 8.2-7 9.5-4-1.3-7-5.1-7-9.5V6l7-3z"/>
-          <path d="M8.8 12.2l2.2 2.2 4.3-4.6"/>
-        </svg>
-      </span>
-      <span class="t">
-        <b>AI 防护</b>
-        <span>Claude Code、Codex 跑危险命令前拦一下，ssh 里的也看 · Mac · Linux</span>
-      </span>
-      <span class="chev">›</span>
-    </a>
-
-    <a class="app" href="pane/install.html">
-      <span class="icon" style="background:linear-gradient(160deg,#3a4150,#12151b)">
-        <!-- 分成两格的窗口，左格 >_，右格一个橙点，与 app 图标同构 -->
-        <svg viewBox="0 0 24 24" fill="none">
-          <rect x="3.5" y="5.5" width="17" height="13" rx="2.6" stroke="#fff" stroke-width="1.6"/>
-          <path d="M13 5.8v12.4" stroke="#fff" stroke-width="1.6"/>
-          <path d="M6.3 10l2 2-2 2M9.4 14.6h2" stroke="#4dde73" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="16.8" cy="12" r="1.5" fill="#ff9f0a"/>
-        </svg>
-      </span>
-      <span class="t">
-        <b>Pane</b>
-        <span>远程窗口 · 手机上看、操作 Mac 的 iTerm2 窗格和 Chrome · iPhone + Mac 助手</span>
-      </span>
-      <span class="chev">›</span>
-    </a>
-
-    <a class="app" href="atlas/install.html">
-      <span class="icon" style="background:linear-gradient(160deg,#4aa3ff,#0a5fd6)">
-        <!-- 白色文件夹加地球，与 app 图标同构 -->
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M3.5 7.2c0-1 .8-1.7 1.7-1.7h4l1.8 2h7.8c1 0 1.7.8 1.7 1.7v8.1c0 1-.8 1.7-1.7 1.7H5.2c-1 0-1.7-.8-1.7-1.7z" fill="#fff"/>
-          <circle cx="12" cy="13.2" r="3.4" stroke="#0a5fd6" stroke-width="1.2"/>
-          <path d="M8.6 13.2h6.8M12 9.8c-1 1-1.4 2.1-1.4 3.4s.4 2.4 1.4 3.4c1-1 1.4-2.1 1.4-3.4S13 10.8 12 9.8z" stroke="#0a5fd6" stroke-width="1.1"/>
-        </svg>
-      </span>
-      <span class="t">
-        <b>Atlas</b>
-        <span>文件浏览 · 平板上看 WireGuard 网里几台电脑的文件，横屏左边目录右边预览 · iPad · 安卓平板 + Mac / Windows / Linux 服务</span>
-      </span>
-      <span class="chev">›</span>
-    </a>
-
-    <a class="app" href="rescue/install.html">
-      <span class="icon" style="background:linear-gradient(160deg,#ff453a,#b3000f)">
-        <!-- 白色十字，与 app 图标同构 -->
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M9.6 4.5h4.8v5.1h5.1v4.8h-5.1v5.1H9.6v-5.1H4.5V9.6h5.1z" fill="#fff"/>
-        </svg>
-      </span>
-      <span class="t">
-        <b>急救</b>
-        <span>人不在电脑前时重启卡住的 iTerm2，窗格摆回原位 · iPhone + 安卓 + Mac 助手</span>
-      </span>
-      <span class="chev">›</span>
-    </a>
-
-    <a class="app" href="curfew/install.html">
-      <span class="icon" style="background:linear-gradient(160deg,#544dc7,#29266b)">
-        <!-- 弯月加两颗星，与 app 图标同构 -->
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M14.8 17.6A6.6 6.6 0 0 1 9.9 5.4a7 7 0 1 0 8.3 9.9 6.6 6.6 0 0 1-3.4 2.3z" fill="#fff"/>
-          <path d="M17 4.5l.5 1.6 1.6.5-1.6.5-.5 1.6-.5-1.6-1.6-.5 1.6-.5z" fill="#fff"/>
-          <path d="M19.4 9.6l.3 1 1 .3-1 .3-.3 1-.3-1-1-.3 1-.3z" fill="#fff"/>
-        </svg>
-      </span>
-      <span class="t">
-        <b>Curfew</b>
-        <span>家长管孩子手机 · 一键锁 / 解锁、宵禁时段到点自动锁 · iPhone · 安卓</span>
-      </span>
-      <span class="chev">›</span>
-    </a>
-
-    <a class="app" href="since/install-ios.html">
-      <span class="icon" style="background:linear-gradient(160deg,#40ccdb,#1a80f2)">
-        <!-- 往回转的箭头圈着时钟指针，与 app 图标同构 -->
+        </svg></span>
+          <span class="name"><b>Footprint</b><small>地点打分</small></span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="desc">吃过的餐厅、玩过的地方，多次评价</p>
+        <div class="chips"><span class="chip">iPhone</span></div>
+      </a>
+      <a class="app" href="since/install-ios.html" data-p="iPhone">
+        <div class="top">
+          <span class="icon" style="background:linear-gradient(160deg,#40ccdb,#1a80f2)"><!-- 往回转的箭头圈着时钟指针，与 app 图标同构 -->
         <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5.6 8.2A7 7 0 1 1 5.3 14"/>
           <path d="M5.2 4.8v3.7h3.7"/>
           <path d="M12 8v4l2.8 1.8"/>
-        </svg>
-      </span>
-      <span class="t">
-        <b>Since</b>
-        <span>上次记录 · 每件事哪天做过、距上次多少天 · iPhone</span>
-      </span>
-      <span class="chev">›</span>
-    </a>
-
-    <a class="app" href="remember/install-ios.html">
-      <span class="icon" style="background:linear-gradient(160deg,#ff738c,#ed2e5c)">
-        <!-- 白色的心，与 app 图标同构 -->
+        </svg></span>
+          <span class="name"><b>Since</b><small>上次记录</small></span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="desc">每件事哪天做过、距上次多少天</p>
+        <div class="chips"><span class="chip">iPhone</span></div>
+      </a>
+      <a class="app" href="remember/install-ios.html" data-p="iPhone">
+        <div class="top">
+          <span class="icon" style="background:linear-gradient(160deg,#ff738c,#ed2e5c)"><!-- 白色的心，与 app 图标同构 -->
         <svg viewBox="0 0 24 24" fill="#fff">
           <path d="M12 20.2C7.6 17 4 14 4 9.8 4 7.2 6 5.2 8.4 5.2c1.5 0 2.8.8 3.6 2 .8-1.2 2.1-2 3.6-2C18 5.2 20 7.2 20 9.8c0 4.2-3.6 7.2-8 10.4z"/>
-        </svg>
-      </span>
-      <span class="t">
-        <b>Remember</b>
-        <span>重要信息 · 生日纪念日（农历也行）、亲友地址，面容 ID · iPhone</span>
-      </span>
-      <span class="chev">›</span>
-    </a>
+        </svg></span>
+          <span class="name"><b>Remember</b><small>重要信息</small></span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="desc">生日纪念日（农历也行）、亲友地址，面容 ID 保护</p>
+        <div class="chips"><span class="chip">iPhone</span></div>
+      </a>
+      </div>
+    </section>
+    <section class="group">
+      <div class="gh"><h2>专注与家庭</h2><span>管住自己，也管管孩子</span></div>
+      <div class="grid">
+      <a class="app" href="macguard/install-mac.html" data-p="Mac">
+        <div class="top">
+          <span class="icon" style="background:linear-gradient(160deg,#1b2230,#0a0d14)"><!-- 环形进度 + 暂停，与 app 图标同构 -->
+        <svg viewBox="0 0 24 24" fill="none">
+          <defs>
+            <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#3db8f0"/>
+              <stop offset="100%" stop-color="#7359eb"/>
+            </linearGradient>
+          </defs>
+          <path d="M12 3.6a8.4 8.4 0 1 1-8.4 8.4"
+                stroke="url(#mg)" stroke-width="2.6" stroke-linecap="round"/>
+          <rect x="9.4" y="9" width="1.9" height="6" rx=".95" fill="#fff"/>
+          <rect x="12.7" y="9" width="1.9" height="6" rx=".95" fill="#fff"/>
+        </svg></span>
+          <span class="name"><b>MacGuard</b><small>防沉迷</small></span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="desc">检测到黑名单域名就打断你</p>
+        <div class="chips"><span class="chip">Mac</span></div>
+      </a>
+      <a class="app" href="curfew/install.html" data-p="iPhone 安卓">
+        <div class="top">
+          <span class="icon" style="background:linear-gradient(160deg,#544dc7,#29266b)"><!-- 弯月加两颗星，与 app 图标同构 -->
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M14.8 17.6A6.6 6.6 0 0 1 9.9 5.4a7 7 0 1 0 8.3 9.9 6.6 6.6 0 0 1-3.4 2.3z" fill="#fff"/>
+          <path d="M17 4.5l.5 1.6 1.6.5-1.6.5-.5 1.6-.5-1.6-1.6-.5 1.6-.5z" fill="#fff"/>
+          <path d="M19.4 9.6l.3 1 1 .3-1 .3-.3 1-.3-1-1-.3 1-.3z" fill="#fff"/>
+        </svg></span>
+          <span class="name"><b>Curfew</b><small>家长管控</small></span>
+          <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="desc">一键锁 / 解锁孩子手机，宵禁时段到点自动锁</p>
+        <div class="chips"><span class="chip">iPhone</span><span class="chip">安卓</span></div>
+      </a>
+      </div>
+    </section>
 
-    <p class="foot">
-      安装包托管在 GitHub Releases<br>
-      源码仓库需要访问权限
-    </p>
+    <p class="empty">这种设备上还没有可装的 App。</p>
+
+    <footer>
+      <span>安装包托管在 GitHub Releases</span>
+      <span>源码仓库需要访问权限</span>
+    </footer>
   </div>
+<script>
+  // 按设备筛选：卡片的 data-p 里有这个设备（手机、平板端或电脑端）就显示；一组里都不显示就把整组藏起来。
+  const buttons = document.querySelectorAll('.seg button');
+  function show(f) {
+    buttons.forEach(b => b.classList.toggle('on', b.dataset.f === f));
+    let any = false;
+    document.querySelectorAll('.group').forEach(g => {
+      let n = 0;
+      g.querySelectorAll('.app').forEach(a => {
+        const ok = !f || a.dataset.p.split(' ').includes(f);
+        a.hidden = !ok; if (ok) n++;
+      });
+      g.hidden = n === 0; if (n) any = true;
+    });
+    document.querySelector('.empty').classList.toggle('show', !any);
+    try { f ? sessionStorage.setItem('f', f) : sessionStorage.removeItem('f'); } catch (e) {}
+  }
+  buttons.forEach(b => b.addEventListener('click', () => show(b.dataset.f)));
+  try { const f = sessionStorage.getItem('f'); if (f) show(f); } catch (e) {}
+  // 筛选条吸顶后下面加一条细线。
+  const bar = document.querySelector('.filters');
+  new IntersectionObserver(([e]) => bar.classList.toggle('stuck', e.intersectionRatio < 1), { threshold: [1], rootMargin: '-1px 0px 0px 0px' }).observe(bar);
+</script>
 </body>
 </html>
