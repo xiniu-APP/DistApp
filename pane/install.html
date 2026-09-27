@@ -122,7 +122,7 @@
   <div class="section-sub">装在要被遥控的电脑上（Pane 助手）</div>
 
   <div class="card" id="terminals">
-    <h3 style="margin-top:0">先看这里：每种电脑用哪种终端</h3>
+    <h3 style="margin-top:0">先看这里：每种电脑用哪种终端、能用什么</h3>
     <p>手机上只能看到下表“终端”这一列里开着的窗格，别的终端看不到。“测过的”是我们实际用过的环境，别的版本大概率也行，但没测过。</p>
     <table class="matrix">
       <tr><th>电脑</th><th>终端</th><th>要先装好</th><th>Codex</th></tr>
@@ -136,7 +136,7 @@
 
     <h3>Claude Code</h3>
     <p>不用设置，手机上往上拖就能翻它的历史。</p>
-    <p class="muted"><span class="tag">测过：Mac 的 iTerm2</span> tmux 里（Windows、Linux）按道理一样，但还没用真的 Claude 测过。</p>
+    <p class="muted"><span class="tag">测过：Mac 的 iTerm2</span> Windows、Linux 的 tmux 里按道理一样，还没用真的 Claude 测过。</p>
 
     <h3>Codex（在 tmux 里用时要设置）</h3>
     <p>Codex 在 tmux 里默认用“全屏”模式，对话不留在终端历史里，手机上往上翻不了。在那台电脑上（Windows 是在 WSL 里）的
@@ -147,6 +147,14 @@ alternate_screen = "never"</code></pre>
 
     <h3>普通窗口（浏览器等）</h3>
     <p>Mac、Windows 上的普通窗口手机上能看、能点；Linux 没有（服务器没有桌面）。</p>
+
+    <h3>开关（手机上打开、关闭电脑上的程序）</h3>
+    <p>Mac、Windows 有，Linux 没有。在手机的开关页里自己挑几个程序：Mac 上是「应用程序」里的 App（一开始先放好了 iTerm2）；
+       Windows 上是开始菜单「所有应用」里的程序，应用商店装的（记事本、终端）也行。电脑上 iTerm2 没开时，手机上先在这里把它打开。</p>
+
+    <h3>配对口令：装好先改</h3>
+    <p>新手机第一次连时，电脑上会弹「允许」；人不在电脑前，就在手机上输配对口令放行。三种助手默认都是 <b>123456</b>，装好先改掉：
+       Mac 在菜单栏图标里「配对口令…」，Windows 在托盘菜单里「配对口令…」，Linux 在管理页里。</p>
   </div>
 
   <div class="card" id="mac">
@@ -162,7 +170,6 @@ alternate_screen = "never"</code></pre>
 
     <h3>先准备好</h3>
     <table>
-      <tr><td>WireGuard</td><td>这台 Mac 要连在同一个 WireGuard 网里（比如 10.0.1.x），手机才能连到它。</td></tr>
       <tr><td>iTerm2 的 Python 接口</td><td>终端要开在 iTerm2 里。iTerm2 → 设置 → General → Magic → 勾上 <b>Enable Python API</b>。
           已经勾着但还连不上时，取消再重新勾一次。</td></tr>
       <tr><td>Python</td><td>不用单独装：助手会自动用 iTerm2 自带的，或者用这台 Mac 上的 Python 3 建一个（第一次要联网）。</td></tr>
@@ -178,9 +185,9 @@ alternate_screen = "never"</code></pre>
 
     <h3>在手机上连它</h3>
     <ol>
-      <li>手机打开 WireGuard 和 Pane</li>
-      <li>点首页顶上那一行 → <b>添加或管理电脑</b>，在「WireGuard 里的设备」里点这台</li>
-      <li>Mac 上会弹「XX 的 iPhone 想连接这台 Mac」，点<b>允许</b></li>
+      <li>点首页顶上那一行 → <b>添加或管理电脑</b>，在「WireGuard 里的 Pane 助手」里点这台。
+          扫的是首页顶上选的网络；没扫到就在「手动填地址」里填这台 Mac 的 WireGuard 地址</li>
+      <li>Mac 上会弹「XX 想连接这台 Mac」，点<b>允许</b>；人不在 Mac 前就在手机上输配对口令</li>
     </ol>
     <p class="muted">推送（可选）：Claude Code 做完、等你回复时推到手机，要在菜单栏图标里「推送：选择密钥文件…」装一个 APNs 密钥（.p8），每台 Mac 各装一次。<br>
        以后不用再来这一页：助手自己查新版，菜单里点<b>更新到新版</b>就自动替换，权限都还在。</p>
@@ -191,14 +198,20 @@ alternate_screen = "never"</code></pre>
     <div class="plat-ver">版本 1.0 (202609272314) · 大小 68.3 MB · Windows 10 / 11（64 位）</div>
     <a class="btn" href="https://github.com/xiniu-APP/DistApp/releases/download/pane-windows-latest/PaneWin.exe">下载 PaneWin.exe</a>
     <ol>
-      <li>双击运行。它会自己装好，常驻在右下角托盘（分屏图标），以后开机自动运行</li>
-      <li>第一次会弹一次管理员确认，是给防火墙放行手机的连接，点“是”</li>
-      <li>装 WSL：管理员 PowerShell 里运行 <code>wsl --install</code>，按提示重启。助手会自己在 WSL 里装好终端部分</li>
+      <li>双击运行。exe 没有签名，第一次可能提示「Windows 已保护你的电脑」，点<b>更多信息 → 仍要运行</b></li>
+      <li>它会自己装好，常驻在右下角托盘（分屏图标），以后开机自动运行。第一次会弹一次管理员确认，是给防火墙放行手机的连接，点“是”</li>
+      <li>装 WSL：管理员 PowerShell 里运行 <code>wsl --install</code>，按提示重启。助手会自己在 WSL 里装好终端部分，
+          先装 exe 还是先装 WSL 都行（WSL 装好后半分钟内自己接上）</li>
       <li>在 WSL 里装 tmux：<code>sudo apt install tmux</code></li>
-      <li>以后终端都开在 WSL 的 tmux 里：打开 WSL，运行 <code>tmux new -A -s main</code></li>
+      <li>以后终端都开在 WSL 的 tmux 里：打开 WSL，运行 <code>tmux new -A -s main</code>。
+          也可以在手机「电脑上正在运行」里点<b>新开一个窗口</b>，桌面上会开一个接着 tmux 的终端</li>
     </ol>
-    <p class="muted">用 Codex 的话，先照上面“先看这里”改一下它的设置。
-       新手机连上来时托盘会弹“允许”，人不在电脑前就在手机上输配对口令（默认 123456，托盘菜单里改）。有新版时托盘菜单里会出现“更新到新版”。</p>
+    <h3>在手机上连它</h3>
+    <ol>
+      <li>点首页顶上那一行 → <b>添加或管理电脑</b>，在「WireGuard 里的 Pane 助手」里点这台；没扫到就手动填它的 WireGuard 地址</li>
+      <li>托盘会弹「允许」，点允许；人不在电脑前就在手机上输配对口令</li>
+    </ol>
+    <p class="muted">用 Codex 的话，先照上面“先看这里”改一下它的设置。有新版时托盘菜单里会出现“更新到新版”。</p>
   </div>
 
   <div class="card" id="linux">
@@ -211,13 +224,20 @@ alternate_screen = "never"</code></pre>
       <li>传到那台机器上，运行：<code>chmod +x pane-helper-linux-* && ./pane-helper-linux-* install</code></li>
       <li>装好后浏览器打开 <b>http://那台机器的地址:7789</b>，用配对口令（默认 123456）登录管理页：改口令、看连着的手机、装推送密钥、一键更新</li>
     </ol>
+    <h3>在手机上连它</h3>
+    <ol>
+      <li>点首页顶上那一行 → <b>添加或管理电脑</b>，在「WireGuard 里的 Pane 助手」里点这台；没扫到就手动填它的 WireGuard 地址</li>
+      <li>服务器上没法弹「允许」，在手机上输配对口令</li>
+    </ol>
+    <p><b>装在有公网 IP 的服务器上要注意</b>：7788（手机连）和 7789（管理页）在所有网卡上监听，公网也能访问，管理页还是明文 http。
+       在防火墙里只放行 WireGuard 网段，并先改掉默认口令。</p>
     <p class="muted">用 Codex 的话，先照上面“先看这里”改一下它的设置。
-       有 systemd 的话自动装成开机服务。服务器上没法弹“允许”，新手机第一次连时在手机上输配对口令。只能看 tmux 里的窗格，没有普通窗口画面。</p>
+       有 systemd 的话自动装成开机服务。只能看 tmux 里的窗格，没有普通窗口画面。</p>
   </div>
   </div>
 
   <p class="foot">
-    更新于 2026-09-27 23:58<br>
+    更新于 2026-09-28 00:10<br>
     安装包托管在 GitHub Releases
   </p>
 
