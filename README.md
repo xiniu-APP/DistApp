@@ -24,6 +24,7 @@ xiniu-APP 的应用分发页。
 cd <macguard 项目目录> && bash tool/release.sh     # MacGuard
 cd <trackflow 项目目录> && scripts/release.sh      # TrackFlow（iPhone Ad Hoc + Mac dmg + 安卓 apk，一个 Release）
 cd <shelf 项目目录>     && scripts/release.sh      # Shelf（同上）
+cd <hub 项目目录>       && scripts/release.sh      # Hub（iPhone、Mac、安卓、Windows、服务端，一个 Release）
 cd <daymark 项目目录>   && scripts/release.sh      # DayMark（iOS，Ad Hoc）
 cd <footprint 项目目录> && scripts/release.sh      # Footprint（iOS，Ad Hoc）
 cd <curfew 项目目录>    && scripts/release.sh      # Curfew（iPhone Ad Hoc；安卓用 scripts/release-android.sh，同一个安装页）
