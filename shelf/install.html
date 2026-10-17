@@ -80,13 +80,13 @@
   <div class="hero">
     <img class="appicon" src="icon-512.png" alt="">
     <h1>Shelf</h1>
-    <div class="ver">版本 <b>1.0 (202609262116)</b> · iPhone · Mac · Windows · Linux · 安卓</div>
+    <div class="ver">版本 <b>1.0 (202610180013)</b> · iPhone · Mac · Windows · 安卓 · 服务端</div>
   </div>
 
   <div class="card">
-    <p>文件中转站：手机、Mac 上随手把图片和文件传到服务器上自己的空间，每次上传都有记录，点一下复制文件在服务器上的路径。</p>
-    <p>iPhone 和安卓可以在相册、文件或任何 App 里「分享 → Shelf」；Mac 上直接把文件拖进窗口或 ⌘V。</p>
-    <p class="muted">注册要邀请码，找管理员要。</p>
+    <p>公司自己的文件中转站：手机、电脑上随手把图片和文件传到公司服务器上自己的空间，也能建共享库和同事一起用；每个文件都有 ID，发给同事粘贴就能打开。</p>
+    <p>iPhone 和安卓可以在相册、文件或任何 App 里「分享 → Shelf」；Mac、Windows 上直接把文件拖进窗口。</p>
+    <p class="muted">打开后先填公司的服务器地址，再用管理员给的用户名和密码登录。</p>
   </div>
 
   <div class="card" id="ios">
@@ -121,16 +121,20 @@
     <p class="muted">需要 Windows 10 / 11（64 位）。关窗口会藏到右下角托盘，从托盘菜单「退出」才真的退出。命令行也能传：<code>Shelf.exe upload 文件</code>。更新时重新下载覆盖 Shelf.exe。</p>
   </div>
 
-  <div class="card" id="linux">
-    <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16v12H4z"/><path d="M7 10l3 2-3 2M12 15h5"/></svg>Linux</div>
-    <a class="btn" href="https://github.com/xiniu-APP/DistApp/releases/download/shelf-latest/shelf-linux-amd64.tar.gz">下载 Linux（x86_64）</a>
-    <a class="btn alt" href="https://github.com/xiniu-APP/DistApp/releases/download/shelf-latest/shelf-linux-arm64.tar.gz">下载 Linux（ARM64）</a>
+  <div class="card" id="server">
+    <div class="plat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="3.5" width="16" height="7" rx="1.5"/><rect x="4" y="13.5" width="16" height="7" rx="1.5"/><path d="M8 7h.01M8 17h.01"/></svg>服务端（给公司 IT）</div>
+    <a class="btn" href="https://github.com/xiniu-APP/DistApp/releases/download/shelf-latest/shelf-server-linux-amd64.tar.gz">下载服务端（Linux x86_64）</a>
+    <a class="btn alt" href="https://github.com/xiniu-APP/DistApp/releases/download/shelf-latest/shelf-server-linux-arm64.tar.gz">下载服务端（Linux ARM64）</a>
     <ol>
-      <li>解压后进到文件夹里运行：</li>
+      <li>在公司的 Linux 服务器上解压安装（要 root）：</li>
     </ol>
-    <pre><code>tar xzf shelf-linux-*.tar.gz &amp;&amp; cd shelf-linux-* &amp;&amp; ./install.sh</code></pre>
-    <p class="muted">装在自己的目录下，不用 sudo：命令行 <code>shelf</code>、应用菜单里的 Shelf 窗口、文件管理器（Nautilus / Dolphin）右键「上传到 Shelf」。
-      窗口需要 Ubuntu 24.04 / Debian 13 / Fedora 40 以上（GTK 4.14、libadwaita 1.5）；没有桌面的服务器也能用命令行：<code>shelf login</code>、<code>shelf upload 文件</code>。卸载：<code>./uninstall.sh</code>。</p>
+    <pre><code>tar xzf shelf-server-linux-*.tar.gz &amp;&amp; cd shelf-server-linux-* &amp;&amp; sudo ./install.sh</code></pre>
+    <ol start="2">
+      <li>改 <code>/etc/shelf/server.env</code>：域名（自动申请 HTTPS 证书）或公司自己的证书、数据目录</li>
+      <li><code>systemctl start shelf-server</code>，再建第一个管理员：<code>/opt/shelf/bin/admin create-admin 用户名</code></li>
+      <li>浏览器打开 <code>https://域名/admin/</code> 登录管理端，给员工建账号</li>
+    </ol>
+    <p class="muted">需要 systemd。升级时下载新包再执行一次 <code>sudo ./install.sh</code>，配置和数据不动。</p>
   </div>
 
   <div class="card" id="android">
@@ -144,7 +148,7 @@
   </div>
 
   <p class="foot">
-    发布于 2026-09-26 22:22<br>
+    发布于 2026-10-18 00:19<br>
     安装包托管在 GitHub Releases
   </p>
 
@@ -153,7 +157,7 @@
   // 在哪种设备上打开，就把那一块放到最前面。
   const ua = navigator.userAgent;
   const first = /iPhone|iPad/.test(ua) ? "ios" : /Android/.test(ua) ? "android" : /Macintosh/.test(ua) ? "mac"
-    : /Windows/.test(ua) ? "windows" : /Linux/.test(ua) ? "linux" : null;
+    : /Windows/.test(ua) ? "windows" : null;
   if (first) {
     const card = document.getElementById(first);
     document.querySelector(".hero").nextElementSibling.after(card);
