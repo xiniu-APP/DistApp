@@ -126,15 +126,16 @@
     <a class="btn" href="https://github.com/xiniu-APP/DistApp/releases/download/hub-latest/hub-server-linux-amd64.tar.gz">下载服务端（Linux x86_64）</a>
     <a class="btn alt" href="https://github.com/xiniu-APP/DistApp/releases/download/hub-latest/hub-server-linux-arm64.tar.gz">下载服务端（Linux ARM64）</a>
     <ol>
+      <li>先装好 PostgreSQL 16 以上（同一台最省事），建 Hub 的账号和库：<code>sudo -u postgres createuser hub &amp;&amp; sudo -u postgres createdb -O hub hub</code></li>
       <li>在公司的 Linux 服务器上解压安装（要 root）：</li>
     </ol>
     <pre><code>tar xzf hub-server-linux-*.tar.gz &amp;&amp; cd hub-server-linux-* &amp;&amp; sudo ./install.sh</code></pre>
-    <ol start="2">
-      <li>改 <code>/etc/hub/server.env</code>：域名（自动申请 HTTPS 证书）或公司自己的证书、数据目录</li>
+    <ol start="3">
+      <li>改 <code>/etc/hub/server.env</code>：域名（自动申请 HTTPS 证书）或公司自己的证书、数据目录；数据库在本机、按上面建的，<code>HUB_DATABASE_URL</code> 就不用改</li>
       <li><code>systemctl start hub-server</code>，再建第一个管理员：<code>/opt/hub/bin/admin create-admin 用户名</code></li>
       <li>浏览器打开 <code>https://域名/admin/</code> 登录管理端，给员工建账号</li>
     </ol>
-    <p class="muted">需要 systemd。升级时下载新包再执行一次 <code>sudo ./install.sh</code>，配置和数据不动。</p>
+    <p class="muted">需要 systemd 和 PostgreSQL 16 以上。升级时下载新包再执行一次 <code>sudo ./install.sh</code>，配置和数据不动。备份用 <code>pg_dump</code>。</p>
   </div>
 
   <div class="card" id="android">
