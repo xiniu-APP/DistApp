@@ -27,6 +27,7 @@ cd <shelf 项目目录>     && scripts/release.sh      # Shelf（同上）
 cd <hub 项目目录>       && scripts/release.sh      # Hub（iPhone、Mac、安卓、Windows、服务端，一个 Release）
 cd <daymark 项目目录>   && scripts/release.sh      # DayMark（iOS，Ad Hoc）
 cd <footprint 项目目录> && scripts/release.sh      # Footprint（iOS，Ad Hoc）
+cd <kolony-ai 项目目录> && scripts/app/release-iphone.sh  # Kolony（iPhone Ad Hoc；安卓用 scripts/app/release-android.sh，同一个安装页）
 cd <curfew 项目目录>    && scripts/release.sh      # Curfew（iPhone Ad Hoc；安卓用 scripts/release-android.sh，同一个安装页）
 cd <aiguard 项目目录>   && ./release.sh            # AI 防护（一个 aiguard.pyz，Claude Code / Codex 的钩子）
 ```
